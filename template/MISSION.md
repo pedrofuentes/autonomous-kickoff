@@ -48,6 +48,7 @@ List the must-have features for the first shippable version (milestone **M1**). 
 - **Git author identity (commits):** {{Name <email>}}
 - **AI attribution (commit `Co-authored-by` trailer):** {{Name <email>}}
 - **Sentinel method:** {{B (CI, enforced by branch protection) for production + A (sub-agent) in dev — recommended.}}
+- **Agent identity (for unattended runs):** {{the distinct GitHub identity the agent runs as — a GitHub App, the Copilot coding agent (`copilot-swe-agent[bot]`), or `github-actions[bot]` — NOT your personal account. Required so decisions can't be forged and the agent can merge (author ≠ approver). See `CONTINUOUS-OPERATION.md` §Agent identity.}}
 - **Enforced coding patterns:** {{project-specific conventions to enforce.}}
 - **Forbidden actions (NEVER):** {{project-specific hard "never"s — secrets, egress, etc.}}
 - **Enable branch protection on `main`?** {{yes/no — yes recommended.}}
@@ -56,6 +57,21 @@ List the must-have features for the first shippable version (milestone **M1**). 
 The generic kickoff already requires: tests green, coverage ≥ threshold, lint/typecheck clean, Sentinel APPROVED/CONDITIONAL on every merge, README/LICENSE/CONTRIBUTING shipped, and an empty board. **Add the acceptance unique to THIS project:**
 - {{e.g., a live URL that loads · a published package install works · a binary runs on target OS · a verified privacy/network test.}}
 
-## 9. Project-specific authorization
-- **Pre-authorized without asking** (agreed up front — typically the stack deps + the CI/CD + the agreed architecture): {{list, or "the stack in §3 + standard CI + the deploy/distribution pipeline".}}
-- **Always require cofounder sign-off first** (beyond the harness defaults): {{e.g., adding a backend/proxy · auth/crypto design · anything sending data off-device · heavy/unusual deps.}}
+## 9. Authorization — what the agent may do without you (tiered)
+
+The agent sorts every gated action into one of five **authorization tiers** and acts per the tier
+*without asking*, except where the tier requires you. These are the defaults; override per project below.
+
+| Tier | The agent… | Default actions in this tier |
+|------|------------|------------------------------|
+| **auto** | just does it | §3 stack deps + reasonable transitive build/test/lint tooling; authoring CI/CD (tests, lint/typecheck, Sentinel Method B, the scanners, the deploy pipeline); routine **reversible** architecture; **staging/preview** deploys; fixing security alerts + shepherding Dependabot PRs; merging a Sentinel-passed PR |
+| **auto-with-audit** | does it, records an ADR/audit note in `DECISIONS.md` | new **non-heavy** dependencies; data-model/schema changes; new config/env vars; new internal module boundaries |
+| **time-boxed** | proposes on the board and **auto-proceeds after the timeout** if you don't object | the **next milestone** *within the approved `ROADMAP.md`*; a non-heavy dep with a transitive-risk note; enabling an optional integration |
+| **human-required** | **blocks until you approve** (a `decision:approved` label / review from *your* identity) | mission / scope / pivots; auth · crypto · credential · privacy-data design; the **first** production deploy or package publish; a **new backend / proxy / external origin**; **heavy or unusual** deps; **accepting** a high/critical security risk; sending user data off the §5 allowlist |
+| **never** | refuses | the §7 NEVER list; committing secrets; weakening/removing Sentinel, tests, branch protection, or the scanners; force-push / history-rewrite of `main`; deleting branches, releases, or data |
+
+- **Default time-box (auto-proceed window for the `time-boxed` tier):** {{24h}}
+- **Risk tolerance:** {{conservative · balanced · aggressive}} — shifts borderline actions between
+  `time-boxed` and `human-required`.
+- **Project overrides** (move specific actions to a different tier): {{list, or "use the defaults above".}}
+- **Pre-authorized specifics** (kept for clarity; these are `auto`): {{the stack in §3 + standard CI + the deploy/distribution pipeline.}}

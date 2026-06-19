@@ -37,6 +37,7 @@
 - **Auth model:** BOTH — (1) fine-grained, read-only Personal Access Token pasted once and stored in-browser (primary, fully self-contained); (2) OAuth **device flow** — best effort.
 - **Privacy/data constraints:** token + all data live only in the browser; no telemetry, no third parties.
 - **Network allowlist (runtime origins):** GitHub-owned only — `api.github.com`, `github.com/login/*` (auth), `avatars.githubusercontent.com` / `raw.githubusercontent.com` (images). Fonts/assets bundled locally; no third-party/CDN/analytics origins. Verify with a Playwright network-interception test.
+- **Agent egress allowlist (the build fleet itself):** `github.com` / `api.github.com`, the **npm registry** (`registry.npmjs.org`), and named research/doc domains — separate from the product's runtime origins above. Deploy/Pages secrets live in GitHub **Environment** secrets, never in the repo or a worktree.
 - **Known security risks to research up front:** GitHub's device-flow token endpoint has no browser CORS → a pure static page likely cannot complete the poll without a proxy/relay. **Do NOT silently add a backend** — research feasibility; if it genuinely needs a server, that's a gated decision (§9). Device flow may be deferred with a written rationale + cofounder sign-off.
 
 ## 6. Reuse & references
@@ -58,7 +59,16 @@
 - **Privacy invariant** verified by the automated network test (GitHub-owned origins only).
 - **Rate-limit safe:** conditional requests + batched GraphQL; degrades gracefully near 5,000 req/hr.
 - README with screenshots/GIF + a one-click "use it now" link.
+- Each item above is bound to an executable test id (`AC-1`…`AC-n`) checked on every PR + milestone (cumulative acceptance regression).
 
-## 9. Project-specific authorization
-- **Pre-authorized without asking:** add the §3 stack deps (React, Vite, TypeScript, Tailwind, Vitest, Playwright, Zod, ESLint/Prettier, React Testing Library) + reasonable transitive tooling; **author** CI/CD workflow files (tests, lint/typecheck, Sentinel Method B, the Pages deploy pipeline) and the Vite base-path + SPA-fallback config; configure branch protection; make routine architecture decisions consistent with this brief.
-- **Always require cofounder sign-off first:** auth/token-storage/privacy design (HUMAN-REQUIRED — no auth/token-persistence code before sign-off); enabling GitHub Pages / activating the production deploy (you author the workflow, the cofounder flips the switch); adding any backend/server/proxy or non-GitHub runtime origin (incl. for device-flow); heavy/unusual deps beyond §3.
+## 9. Authorization — tiers (defaults from the template `MISSION.md` §9; project specifics below)
+The agent sorts every gated action into `auto` · `auto-with-audit` · `time-boxed` · `human-required` · `never` and acts per tier. For this project:
+- **Default time-box (auto-proceed window):** 24h.
+- **Risk tolerance:** conservative — the app holds a user's GitHub token, so borderline actions sit at `human-required`.
+- **Production release gate:** human-required — *you* flip on GitHub Pages / activate the production deploy for each release; staging/preview is `auto`.
+- **`auto` (pre-authorized, no asking):** add the §3 stack deps (React, Vite, TypeScript, Tailwind, Vitest, Playwright, Zod, ESLint/Prettier, React Testing Library) + reasonable transitive tooling; **author** CI/CD workflow files (tests, lint/typecheck, Sentinel Method B, the Pages deploy pipeline) + the Vite base-path/SPA-fallback config; configure branch protection; routine **reversible** architecture consistent with this brief.
+- **`human-required` (sign-off first):** auth / token-storage / privacy design (no auth/token-persistence code before sign-off); adding any backend / server / proxy or non-GitHub runtime origin (incl. for device-flow); heavy/unusual deps beyond §3; any `.github/workflows/**` edit; a first-time-contributor PR.
+- **`never`:** commit a PAT or any secret; send user code/data to a non-GitHub origin; weaken/bypass Sentinel, tests, branch protection, or the scanners; force-push / rewrite `main`; delete branches/releases/data.
+
+## 10. Resource governance (concurrency & cost)
+- **Max concurrent workers / worktrees:** 4 · **per-watchdog-tick spawn cap:** 3 · **per-milestone cost budget:** no hard cap (small project) — queue at the caps, finish in-flight work first.

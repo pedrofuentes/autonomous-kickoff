@@ -47,13 +47,13 @@ The agent then bootstraps `agents-template`, researches, plans, builds (TDD + Se
 
 ### Update an existing project to the latest template
 
-> **Fetch the latest autonomous-kickoff template from https://github.com/pedrofuentes/autonomous-kickoff — read its `template/docs/VERSION` and compare to my `docs/VERSION`. If I'm behind, show me the `CHANGELOG.md` entries between the two versions, then update `docs/KICKOFF.md`, `docs/ORCHESTRATION.md`, `docs/CONTINUOUS-OPERATION.md` and `docs/VERSION` from `template/docs/*` (they're generic — nothing project-specific to preserve) and run any Migration steps the changelog lists for those versions. Leave my `MISSION.md` untouched. Show me a diff summary before applying, then re-arm the continuous-operation watchdog (see `CONTINUOUS-OPERATION.md`) so work resumes.**
+> **Fetch the latest autonomous-kickoff template from https://github.com/pedrofuentes/autonomous-kickoff — read its `template/docs/VERSION` and compare to my `docs/VERSION`. If I'm behind, show me the `CHANGELOG.md` entries between the two versions, then update `docs/KICKOFF.md`, `docs/ORCHESTRATION.md`, `docs/CONTINUOUS-OPERATION.md` and `docs/VERSION` from `template/docs/*` (they're generic — nothing project-specific to preserve) and run any Migration steps the changelog lists for those versions. Leave my `MISSION.md` untouched — but if a Migration step requires a `MISSION.md` change (a new section, or the §9 schema change in a MAJOR bump), **don't edit it; hand me a checklist of those manual follow-ups** and flag that the updated docs may reference brief sections/knobs I haven't added yet. Show me a diff summary before applying, then re-arm the continuous-operation watchdog (see `CONTINUOUS-OPERATION.md`) so work resumes.**
 
 ### Migrate a running project to the latest version (mid-build)
 
 Use this when an agent is **already building** and you want it to adopt a newer template version without disrupting the run (the Update prompt above is for a repo between sessions). Paste into the running agent's session:
 
-> **Migrate this project to the latest autonomous-kickoff template, safely and mid-run. (1) First read and record my current `docs/VERSION` (if it's absent, treat my version as pre-1.0 / unversioned). (2) Fetch https://github.com/pedrofuentes/autonomous-kickoff and overwrite `docs/KICKOFF.md`, `docs/ORCHESTRATION.md`, `docs/CONTINUOUS-OPERATION.md` and `docs/VERSION` from its `template/docs/*`; leave `MISSION.md` untouched. (3) Read `CHANGELOG.md` and follow the Migration steps from my recorded old version up to the new one — apply them additively, without disrupting in-flight work: keep all current cards, worktrees, and the open increment as they are; create any missing board Status options and labels; adopt the new comment/identity and decision rules; and apply new phase gates only to work not yet started. (4) Re-read the three docs, record the new `docs/VERSION` in `PLAN.md`, **re-arm the watchdog**, then continue the build from where you left off — do this at the next safe point (after the current PR is opened) and report a one-line summary of what changed.**
+> **Migrate this project to the latest autonomous-kickoff template, safely and mid-run. (1) First read and record my current `docs/VERSION` (if it's absent, treat my version as pre-1.0 / unversioned). (2) Fetch https://github.com/pedrofuentes/autonomous-kickoff and overwrite `docs/KICKOFF.md`, `docs/ORCHESTRATION.md`, `docs/CONTINUOUS-OPERATION.md` and `docs/VERSION` from its `template/docs/*`; leave `MISSION.md` untouched. (3) Read `CHANGELOG.md` and follow the Migration steps from my recorded old version up to the new one — apply them additively, without disrupting in-flight work: keep all current cards, worktrees, and the open increment as they are; create any missing board Status options and labels; adopt the new comment/identity and decision rules; and apply new phase gates only to work not yet started. Any Migration step that needs a `MISSION.md` edit (a new section, or the §9 tier-matrix schema in a MAJOR bump) — **don't touch `MISSION.md`; hand me a checklist of those manual follow-ups** and flag that the new docs reference brief sections/knobs I must add for them to fully resolve. (4) Re-read the three docs, record the new `docs/VERSION` in `PLAN.md`, **re-arm the watchdog**, then continue the build from where you left off — do this at the next safe point (after the current PR is opened) and report a one-line summary of what changed.**
 
 ### Manual fallback (no fetch)
 
@@ -103,8 +103,7 @@ To show this isn't just for web apps, here's a minimal `MISSION.md` for a one-co
 - `npx slugify-cli "A B"` prints `a-b` from the *published* package; README has usage + examples.
 
 ## 9. Authorization
-- Pre-authorized: the §3 deps + the npm-publish CI workflow.
-- Sign-off first: the npm publish token / the first `npm publish`.
+- Tiers per template §9. `auto`: the §3 deps + the npm-publish CI workflow. `human-required`: the npm publish token + the first `npm publish` *of each release*. Default time-box 24h; risk tolerance balanced.
 ```
 
 Then, in a fresh agent session in the repo, launch:

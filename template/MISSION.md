@@ -35,7 +35,8 @@ List the must-have features for the first shippable version (milestone **M1**). 
 ## 5. Security, privacy & data
 - **Auth model:** {{none · API token pasted & stored in-browser · OAuth · API keys · etc.}}
 - **Privacy/data constraints:** {{Where user data may live; what must never leave the device/process.}}
-- **Network allowlist (runtime origins the app may contact):** {{e.g., only api.example.com — or "N/A".}}
+- **Network allowlist (runtime origins the *product* may contact):** {{e.g., only api.example.com — or "N/A".}}
+- **Agent egress allowlist (origins the *build fleet itself* may reach — distinct from the product's):** {{default: GitHub + your package registry + the research/doc domains you name. The fleet must not reach beyond this; deploy/registry secrets live in GitHub **Environment** secrets, never in the repo or a worktree.}}
 - **Known security risks to research up front:** {{e.g., a flow that may need a proxy/secret and therefore a gated decision.}}
 - **Continuous scanning:** Dependabot, code scanning (CodeQL) and secret scanning are enabled and monitored; open **high/critical** vulnerability alerts and any detected secret gate every release (lower-severity tracked on the board).
 
@@ -56,6 +57,7 @@ List the must-have features for the first shippable version (milestone **M1**). 
 ## 8. Definition of Done (project-specific acceptance)
 The generic kickoff already requires: tests green, coverage ≥ threshold, lint/typecheck clean, Sentinel APPROVED/CONDITIONAL on every merge, README/LICENSE/CONTRIBUTING shipped, and an empty board. **Add the acceptance unique to THIS project:**
 - {{e.g., a live URL that loads · a published package install works · a binary runs on target OS · a verified privacy/network test.}}
+- **Make each item executable.** Phrase every acceptance item so it maps to a stable test id (`AC-1`, `AC-2`, …) the suite checks on **every PR and every milestone** (cumulative acceptance regression) — quality is machine-verified, not asserted.
 
 ## 9. Authorization — what the agent may do without you (tiered)
 
@@ -67,11 +69,23 @@ The agent sorts every gated action into one of five **authorization tiers** and 
 | **auto** | just does it | §3 stack deps + reasonable transitive build/test/lint tooling; authoring CI/CD (tests, lint/typecheck, Sentinel Method B, the scanners, the deploy pipeline); routine **reversible** architecture; **staging/preview** deploys; fixing security alerts + shepherding Dependabot PRs; merging a Sentinel-passed PR |
 | **auto-with-audit** | does it, records an ADR/audit note in `DECISIONS.md` | new **non-heavy** dependencies; data-model/schema changes; new config/env vars; new internal module boundaries |
 | **time-boxed** | proposes on the board and **auto-proceeds after the timeout** if you don't object | the **next milestone** *within the approved `ROADMAP.md`*; a non-heavy dep with a transitive-risk note; enabling an optional integration |
-| **human-required** | **blocks until you approve** (a `decision:approved` label / review from *your* identity) | mission / scope / pivots; auth · crypto · credential · privacy-data design; the **first** production deploy or package publish; a **new backend / proxy / external origin**; **heavy or unusual** deps; **accepting** a high/critical security risk; sending user data off the §5 allowlist |
-| **never** | refuses | the §7 NEVER list; committing secrets; weakening/removing Sentinel, tests, branch protection, or the scanners; force-push / history-rewrite of `main`; deleting branches, releases, or data |
+| **human-required** | **blocks until you approve** (a `decision:approved` label / review from *your* identity) | mission / scope / pivots; auth · crypto · credential · privacy-data design; the **first** production deploy or package publish **of each release**; a **new backend / proxy / external origin**; **heavy or unusual** deps; **accepting** a high/critical security risk; sending user data off the §5 allowlist; a **harness-integrity** PR (the Sentinel config/prompt, `AGENTS.md`, CI workflows, branch protection, or scanner config); a **third-party / first-time-contributor** PR |
+| **never** | refuses | the §7 NEVER list; committing secrets; weakening/removing Sentinel, tests, branch protection, or the scanners (branch protection is **tighten-only**); force-push / history-rewrite of `main`; deleting branches, releases, tags, or data; changing `.github/workflows/**` security-relevant config without a `human-required` gate |
 
 - **Default time-box (auto-proceed window for the `time-boxed` tier):** {{24h}}
 - **Risk tolerance:** {{conservative · balanced · aggressive}} — shifts borderline actions between
   `time-boxed` and `human-required`.
+- **Production release gate:** {{human-required}} — the first production deploy/publish *of each release*
+  (staging/preview stays `auto`); set to `time-boxed` or `auto` only if you accept shipping to production
+  unattended. Enforce it with a protected **Environment** (required reviewers) on the production job.
 - **Project overrides** (move specific actions to a different tier): {{list, or "use the defaults above".}}
 - **Pre-authorized specifics** (kept for clarity; these are `auto`): {{the stack in §3 + standard CI + the deploy/distribution pipeline.}}
+
+## 10. Resource governance (concurrency & cost)
+
+Caps the fleet so it can't runaway-spawn or overspend. Defaults below; override per project. The
+orchestrator and watchdog honor these — on breach they **queue** new work and finish in-flight increments
+first; they never exceed a cap.
+- **Max concurrent workers / worktrees:** {{4}}
+- **Per-watchdog-tick spawn cap:** {{3}}
+- **Per-milestone token/cost budget (soft — queue at the cap, raise a `needs:decision` to exceed):** {{set a number, or "no cap".}}

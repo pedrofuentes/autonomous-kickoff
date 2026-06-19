@@ -25,8 +25,9 @@ The setup prompt auto-fills what it can infer and asks you for the rest — this
 - [ ] §5 Security/privacy/data — auth model, constraints, network allowlist, risks to research
 - [ ] §6 Reuse & references — prior art to study/port
 - [ ] §7 Harness pre-answers — coverage threshold, git identity, AI attribution, Sentinel method, patterns, forbidden actions, branch protection (these stop agents-template's setup from stalling)
-- [ ] §8 Definition of Done — project-specific acceptance (a live URL, a published package, etc.)
-- [ ] §9 Authorization — what's pre-authorized vs. what always needs your sign-off
+- [ ] §8 Definition of Done — project-specific acceptance (a live URL, a published package, etc.), each item phrased as an executable `AC-n` test
+- [ ] §9 Authorization — the five-tier matrix (`auto` · `auto-with-audit` · `time-boxed` · `human-required` · `never`): time-box, risk tolerance, production-release gate, project overrides
+- [ ] §10 Resource governance — concurrency caps + per-milestone cost budget
 
 > Leave a field as `{{...}}` only if you *want* the agent to handle it at launch — for **vision-level** fields (mission, users, success vision) the agent acts as a **thought partner**, drafting a proposal from your repo + light research and refining it with you, not just collecting answers.
 

@@ -10,6 +10,21 @@ All notable changes to the **autonomous-kickoff** template are recorded here. Ve
 The current version lives in [`template/docs/VERSION`](template/docs/VERSION) and travels into each
 consumer's `docs/VERSION`. Releases are git-tagged `vX.Y.Z`.
 
+## [1.2.0] — 2026-06-19
+
+### Added
+- **Co-founder collaboration — turning intent into action.** The agent is a thought partner that turns
+  vague intent into clear, actionable, **recorded** goals (draft from a repo scan + light research → ask
+  focused questions → refine to approval → write to `MISSION.md` / `ROADMAP.md` / 1-PR board issues with
+  acceptance criteria), at four moments: initial vision/mission, each next milestone, any ad-hoc request,
+  and applying feedback. **Channel:** shape it live in the CLI, but the **GitHub Project board is the
+  system of record** — proposals as `DECISION:` issues, feedback via `Decision: changes — …` — durable
+  and watchdog-resumable. Never invents product scope unilaterally.
+- **Heartbeat lifecycle clarity.** A *Starting & restarting the heartbeat* guide (re-arm after
+  closing/reopening the CLI, a crash, the kill switch, a project stop, or an Update/Migrate; how
+  to check it's running), and an explicit answer to "does the CLI need to stay open?" (Tier 1 yes; Tier 2
+  machine-off / unattended). The **Update** and **Migrate** prompts now re-arm the watchdog.
+
 ## [1.1.0] — 2026-06-19
 
 ### Added
@@ -73,5 +88,6 @@ or do it by hand:
    phases. Run the Phase 0 capability probe if you never did.
 5. Record the new `docs/VERSION` in `PLAN.md` and continue the build.
 
+[1.2.0]: https://github.com/pedrofuentes/autonomous-kickoff/releases/tag/v1.2.0
 [1.1.0]: https://github.com/pedrofuentes/autonomous-kickoff/releases/tag/v1.1.0
 [1.0.0]: https://github.com/pedrofuentes/autonomous-kickoff/releases/tag/v1.0.0

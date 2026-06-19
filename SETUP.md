@@ -5,7 +5,7 @@ A 5-minute checklist to point this at a new project.
 ## 1. Pull the template into your project (the agent does this)
 In an agent session in your project repo, paste:
 
-> **Fetch the autonomous-kickoff template from https://github.com/pedrofuentes/autonomous-kickoff — download all files from `template/` into this project's root (`MISSION.md` + `docs/KICKOFF.md`, `docs/ORCHESTRATION.md`, `docs/CONTINUOUS-OPERATION.md`, `docs/VERSION`). Then read `docs/KICKOFF.md`, auto-fill what you can in `MISSION.md`, and ask me for the rest. Don't start building yet.**
+> **Fetch the autonomous-kickoff template from https://github.com/pedrofuentes/autonomous-kickoff — download all files from `template/` into this project's root (`MISSION.md` + `docs/KICKOFF.md`, `docs/ORCHESTRATION.md`, `docs/CONTINUOUS-OPERATION.md`, `docs/VERSION`). Then read `docs/KICKOFF.md`, auto-fill what you can in `MISSION.md`, ask me for the concrete missing facts, and act as a thought partner to draft the vision-level fields (mission, users, success vision) with me — don't just collect, and don't invent product scope. Don't start building yet.**
 
 Manual fallback:
 ```bash
@@ -28,13 +28,13 @@ The setup prompt auto-fills what it can infer and asks you for the rest — this
 - [ ] §8 Definition of Done — project-specific acceptance (a live URL, a published package, etc.)
 - [ ] §9 Authorization — what's pre-authorized vs. what always needs your sign-off
 
-> Leave a field as `{{...}}` only if you *want* the agent to ask you about it at launch.
+> Leave a field as `{{...}}` only if you *want* the agent to handle it at launch — for **vision-level** fields (mission, users, success vision) the agent acts as a **thought partner**, drafting a proposal from your repo + light research and refining it with you, not just collecting answers.
 
 ## 3. (Optional, for durable 24/7) Enable platform toggles
 Per `CONTINUOUS-OPERATION.md` Tier 2: enable the Copilot coding agent, GitHub Actions, and your deploy/distribution target (e.g. Pages or a registry token).
 
 ## 4. Launch
-Open a fresh agent session in the repo and paste the launch pointer from the README (or the `BEGIN…END` block in `docs/KICKOFF.md`). Watch the GitHub Project board; respond fast when @-mentioned on a gate.
+Open a fresh agent session in the repo and paste the launch pointer from the README (or the `BEGIN…END` block in `docs/KICKOFF.md`). Watch the GitHub Project board; respond fast when @-mentioned on a gate. **Keep it running:** the **Tier-1** watchdog runs only while this CLI session is open; for **machine-off, unattended** operation enable **Tier 2** (§3). To restart the heartbeat after closing the CLI, a crash, the kill switch, or an update, see *Starting & restarting the heartbeat* in `CONTINUOUS-OPERATION.md`.
 
 ## 5. Pause/stop
 See the **Kill switch** section of `CONTINUOUS-OPERATION.md`.

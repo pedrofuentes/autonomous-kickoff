@@ -41,7 +41,7 @@ You don't copy files by hand — like `agents-template`, you hand the agent a pr
 
 ### 2. Launch — once `MISSION.md` looks right
 
-> **Read `docs/KICKOFF.md` (your operating instructions) and `MISSION.md` (this project's brief), then begin Phase 0. Work continuously until the Definition of Done is met; only stop for a HUMAN-REQUIRED gate or when truly done.**
+> **Read `docs/KICKOFF.md` (your operating instructions) and `MISSION.md` (this project's brief), then begin Phase 0. Work continuously until the current milestone's Definition of Done is met, then open the next-milestone Decision gate and continue on approval; only stop for a HUMAN-REQUIRED gate or when the project is complete.**
 
 The agent then bootstraps `agents-template`, researches, plans, builds (TDD + Sentinel), and ships. **Prefer a single paste?** Use the Set-up prompt and append: *"…then, once I confirm `MISSION.md`, immediately read `docs/KICKOFF.md` and begin Phase 0."*
 
@@ -116,6 +116,12 @@ From there the agent: bootstraps `agents-template` → researches CLI ergonomics
 ## Keeping it always working
 
 `CONTINUOUS-OPERATION.md` gives three tiers: the **board is the heartbeat**, a **Tier-1 in-session watchdog** (a recurring schedule that resumes the agent if it idles), and **Tier-2 durable 24/7** (a scheduled GitHub Actions cron → Copilot cloud coding agent + Sentinel-in-CI), plus a Definition of Done and a kill switch so it stops on purpose. An atomic issue-claim protocol prevents the two tiers from double-working a card.
+
+Builds run **milestone by milestone**: at each milestone's Definition of Done the agent proposes the next `ROADMAP.md` milestone via a Decision gate and resumes on your approval — so "the next round" is just you answering that gate (from anywhere). It also **continuously watches security** (Dependabot / code scanning / secret scanning), filing alerts as board issues and gating releases on high/critical vulnerabilities and any detected secret. It stops for good only when you declare the project complete or the roadmap is empty.
+
+**Start the next round manually** (e.g., to resume a stopped run or inject a new direction):
+
+> **A milestone shipped — start the next round: read `ROADMAP.md` and `MISSION.md`, propose the next milestone's scope as a `DECISION:` issue and @-mention me; on my approval, re-seed the board from that milestone and continue. If I've added a new direction to `ROADMAP.md`/`MISSION.md`, use that.**
 
 ## Relationship to agents-template
 

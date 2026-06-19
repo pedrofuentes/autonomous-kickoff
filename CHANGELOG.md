@@ -10,6 +10,22 @@ All notable changes to the **autonomous-kickoff** template are recorded here. Ve
 The current version lives in [`template/docs/VERSION`](template/docs/VERSION) and travels into each
 consumer's `docs/VERSION`. Releases are git-tagged `vX.Y.Z`.
 
+## [1.1.0] — 2026-06-19
+
+### Added
+- **Milestone-by-milestone evolution.** Work is organized into milestones in `ROADMAP.md` (M1 = MVP,
+  then prioritized future milestones); the Definition of Done is evaluated **per milestone**. At each
+  milestone boundary the agent reports, opens a `DECISION:` "next milestone" gate proposing the next
+  ROADMAP scope, and resumes on the cofounder's approval — reusing the Decision protocol + watchdog. It
+  **never builds new milestone scope unilaterally**, and stops for good only when the cofounder declares
+  the project complete or the roadmap is exhausted.
+- **Continuous security vigilance.** The agent enables and monitors **Dependabot**, **CodeQL code
+  scanning**, and **secret scanning**: each watchdog tick it triages new alerts and Dependabot PRs onto
+  the board as `security` issues (high/critical preempt the queue) and fixes them via TDD + Sentinel.
+  **No open high/critical alert (and no detected secret) is a release / Definition-of-Done gate.**
+  Routine security and dependency fixes are in-scope maintenance; a fix needing a HUMAN-REQUIRED/ASK-FIRST action still uses the normal gate. Adds the `security`
+  label.
+
 ## [1.0.0] — 2026-06-19
 
 First versioned release — declares the public prompt contract stable. Everything below is in the generic
@@ -57,4 +73,5 @@ or do it by hand:
    phases. Run the Phase 0 capability probe if you never did.
 5. Record the new `docs/VERSION` in `PLAN.md` and continue the build.
 
+[1.1.0]: https://github.com/pedrofuentes/autonomous-kickoff/releases/tag/v1.1.0
 [1.0.0]: https://github.com/pedrofuentes/autonomous-kickoff/releases/tag/v1.0.0

@@ -26,7 +26,7 @@
 - **Test runner / e2e:** {{e.g., Vitest + Playwright · pytest · go test}}
 
 ## 4. MVP scope (v1)
-List the must-have features for the first shippable version. Everything else is post-MVP backlog.
+List the must-have features for the first shippable version (milestone **M1**). Everything else is post-MVP backlog — it feeds the `ROADMAP.md` milestones the agent proposes after each release via the next-milestone gate.
 1. {{Feature}}
 2. {{Feature}}
 3. {{Feature}}
@@ -37,6 +37,7 @@ List the must-have features for the first shippable version. Everything else is 
 - **Privacy/data constraints:** {{Where user data may live; what must never leave the device/process.}}
 - **Network allowlist (runtime origins the app may contact):** {{e.g., only api.example.com — or "N/A".}}
 - **Known security risks to research up front:** {{e.g., a flow that may need a proxy/secret and therefore a gated decision.}}
+- **Continuous scanning:** Dependabot, code scanning (CodeQL) and secret scanning are enabled and monitored; open **high/critical** vulnerability alerts and any detected secret gate every release (lower-severity tracked on the board).
 
 ## 6. Reuse & references
 - **Prior art / code to study or port:** {{repo links + what to take from them.}}

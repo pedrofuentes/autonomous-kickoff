@@ -37,6 +37,56 @@ examples/
 
    (Or paste the whole `BEGIN…END` block from `docs/KICKOFF.md`.)
 
+## Worked example — a tiny CLI (proof it's product-agnostic)
+
+To show this isn't just for web apps, here's a minimal `MISSION.md` for a one-command CLI published to npm. Only the load-bearing fields are shown; the rest follow the template defaults.
+
+```md
+# MISSION — slugify-cli
+
+## 1. Identity & mission
+- Project name: slugify-cli
+- Repo: yourname/slugify-cli
+- Cofounder handle: @yourname
+- One-line mission: A zero-dependency CLI that turns any text into a URL-safe slug.
+- Target users & the problem: Devs who want consistent slugs in scripts/CI without a web tool.
+- Success vision: the go-to `npx` one-liner for slugs.
+
+## 2. Product shape
+- Product type: CLI
+- Hosting / distribution: npm package (`npx slugify-cli "Hello World"` → `hello-world`)
+- Backend? None.
+
+## 3. Tech stack
+- Language: TypeScript · Package manager: npm · Test runner: Vitest
+
+## 4. MVP scope (v1)
+1. `slugify "<text>"` prints the slug
+2. flags: `--sep <char>` (default `-`), `--lower/--no-lower`
+3. reads from stdin when no argument is given
+
+## 5. Security, privacy & data
+- No auth, no network calls, no data collected. Network allowlist: N/A.
+
+## 7. Harness pre-answers
+- Coverage threshold: 90 · Sentinel: B (CI) + A (dev)
+- Git identity / AI attribution: <fill in>
+- NEVER: publish a release with failing tests.
+
+## 8. Definition of Done
+- `npx slugify-cli "A B"` prints `a-b` from the *published* package; README has usage + examples.
+
+## 9. Authorization
+- Pre-authorized: the §3 deps + the npm-publish CI workflow.
+- Sign-off first: the npm publish token / the first `npm publish`.
+```
+
+Then, in a fresh agent session in the repo, launch:
+
+> **Read `docs/KICKOFF.md` + `MISSION.md`, begin Phase 0.**
+
+From there the agent: bootstraps `agents-template` → researches CLI ergonomics and writes a PRD + GitHub Project board → builds `slugify` test-first in isolated worktrees with a Sentinel review on every PR → wires an npm-publish workflow (pausing to ask you to approve the publish token, per §9) → ships → and stops once `npx slugify-cli "A B"` prints `a-b` from the published package. Same prompt, same flow — only `MISSION.md` changed.
+
 ## Keeping it always working
 
 `CONTINUOUS-OPERATION.md` gives three tiers: the **board is the heartbeat**, a **Tier-1 in-session watchdog** (a recurring schedule that resumes the agent if it idles), and **Tier-2 durable 24/7** (a scheduled GitHub Actions cron → Copilot cloud coding agent + Sentinel-in-CI), plus a Definition of Done and a kill switch so it stops on purpose. An atomic issue-claim protocol prevents the two tiers from double-working a card.

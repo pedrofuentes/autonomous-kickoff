@@ -44,10 +44,10 @@ In every tier the implementation chain **reports upward**, and Sentinel is invok
 
 ## Per-increment merge protocol
 
-1. Engineer: failing test → minimal impl → refactor green → **Pre-Push Verification** (test-first ordering, full suite green, lint clean) → push → open PR → **stop & report** PR URL + HEAD SHA.
+1. Engineer: claim the card (assignee + `claimed:*`; mirror Status **In Progress**) → failing test → minimal impl → refactor green → **Pre-Push Verification** (test-first ordering, full suite green, lint clean) → push → open PR → **stop & report** PR URL + HEAD SHA.
 2. Lead: print "Invoking Sentinel…", spawn a full-capability Sentinel sub-agent with `docs/SENTINEL.md` as system prompt; pass the PR diff (`git diff main...HEAD`) wrapped in `<untrusted_pr_input>`, branch, PR URL, changed files, and any open `sentinel:*` issues.
 3. Lead: complete the **Pre-Merge Checklist** (Report ID, verdict, reviewed SHA == HEAD, Mode, non-author confirmation). Empty box → do not merge.
-4. On **APPROVED/CONDITIONAL** → merge; persist the Sentinel report; file new 🟡/🟢 findings as `sentinel:important` / `sentinel:minor` issues; clean up the worktree. (CONDITIONAL is a valid merge under the harness — its conditions are filed as `sentinel:*` issues and must be resolved before the final Definition-of-Done sign-off.) On **REJECTED** → engineer fixes 🔴 blockers, re-commit, re-invoke (max 5 cycles → escalate to the cofounder).
+4. On **APPROVED/CONDITIONAL** → merge; **set the card Done and close the issue**; persist the Sentinel report; file new 🟡/🟢 findings as `sentinel:important` / `sentinel:minor` issues; clean up the worktree. (CONDITIONAL is a valid merge under the harness — its conditions are filed as `sentinel:*` issues and must be resolved before the final Definition-of-Done sign-off.) On **REJECTED** → engineer fixes 🔴 blockers, re-commit, re-invoke (max 5 cycles → escalate to the cofounder).
 
 ## Coordination & memory
 
@@ -57,4 +57,4 @@ In every tier the implementation chain **reports upward**, and Sentinel is invok
 
 ## Handling gates without stalling the fleet
 
-When an increment hits an **ASK-FIRST** (not pre-authorized in `MISSION.md` §9) or **HUMAN-REQUIRED** action: raise it on the board via the **Decision protocol** (`CONTINUOUS-OPERATION.md` Tier 3) — a `DECISION:` issue labeled `needs:decision`, the card moved to **Blocked**, the cofounder @-mentioned — **and immediately pick up the next unblocked board item.** The fleet never goes fully idle because of a single gate. The watchdog re-checks blocked cards each tick and resumes them the moment you answer.
+When an increment hits an **ASK-FIRST** (not pre-authorized in `MISSION.md` §9) or **HUMAN-REQUIRED** action: raise it on the board via the **Decision protocol** (`CONTINUOUS-OPERATION.md` Tier 3) — a **decision** you must answer → a `DECISION:` issue (`needs:decision`, Status **Pending Decision**); an **action** only you can perform → a `BLOCKED:` issue (`blocked`, Status **Blocked**) — @-mention the cofounder **and immediately pick up the next unblocked board item.** The fleet never goes fully idle because of a single gate. The watchdog re-checks these cards each tick and resumes them the moment you answer or act.

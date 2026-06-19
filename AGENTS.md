@@ -29,7 +29,8 @@
 ## Conventions
 
 - Markdown; keep the `=== BEGIN/END KICKOFF PROMPT ===` markers intact.
-- **Label vocabulary** the prompts depend on — reuse these exact names, don't invent synonyms: `needs:decision`, `decision:approved`, `decision:changes`, `claimed:*`, `ready`, `sentinel:important`, `sentinel:minor`, `flaky`.
+- **Label vocabulary** the prompts depend on — reuse these exact names, don't invent synonyms: `needs:decision`, `decision:approved`, `decision:changes`, `blocked`, `claimed:*`, `ready`, `sentinel:important`, `sentinel:minor`, `flaky`.
+- **Board Status values** the prompts standardize on (a Projects-v2 single-select; not labels): `Todo` · `In Progress` · `Blocked` (human must act) · `Pending Decision` (awaiting a `Decision:` answer) · `Done`.
 - **Decision directives** the prompts parse: a comment whose first line is `Decision: approved` | `Decision: option <X>` | `Decision: changes — <…>` | `Decision: hold`.
 - Keep pasteable prompts copy-safe: straight quotes (no smart quotes) inside any block a user copies.
 

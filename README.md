@@ -29,13 +29,29 @@ examples/
 
 ## Quick start
 
-1. Copy `template/MISSION.md` and `template/docs/` into your project (alongside `agents-template`'s files). See `SETUP.md`.
-2. Fill in `MISSION.md` (use `examples/github-dashboard-MISSION.md` as a model).
-3. In a fresh agent session in the repo, paste the launch pointer:
+You don't copy files by hand — like `agents-template`, you hand the agent a prompt and it sets itself up. Two steps: **set up**, then **launch**.
 
-   > **You are launching an autonomous build. Read `docs/KICKOFF.md` (your operating instructions) and `MISSION.md` (this project's brief), then begin Phase 0. Work continuously until the Definition of Done is met; only stop for a HUMAN-REQUIRED gate or when truly done.**
+### 1. Set up — paste into an agent session in your project repo
 
-   (Or paste the whole `BEGIN…END` block from `docs/KICKOFF.md`.)
+> **Fetch the autonomous-kickoff template from https://github.com/pedrofuentes/autonomous-kickoff — download all files from the `template/` directory into this project's root (you'll get `MISSION.md` plus `docs/KICKOFF.md`, `docs/ORCHESTRATION.md`, `docs/CONTINUOUS-OPERATION.md`). Then read `docs/KICKOFF.md`. Scan my project and auto-fill everything you can in `MISSION.md` (name, repo, stack, package manager, test runner from manifests/config); then ask me — in one batch — for what you can't infer (mission, users, success vision, MVP, security/auth, harness pre-answers, what's pre-authorized vs. gated). Show me the filled `MISSION.md` for confirmation. Do NOT start building yet.**
+
+### 2. Launch — once `MISSION.md` looks right
+
+> **Read `docs/KICKOFF.md` (your operating instructions) and `MISSION.md` (this project's brief), then begin Phase 0. Work continuously until the Definition of Done is met; only stop for a HUMAN-REQUIRED gate or when truly done.**
+
+The agent then bootstraps `agents-template`, researches, plans, builds (TDD + Sentinel), and ships. **Prefer a single paste?** Use the Set-up prompt and append: *"…then, once I confirm `MISSION.md`, immediately read `docs/KICKOFF.md` and begin Phase 0."*
+
+### Update an existing project to the latest template
+
+> **Fetch the latest autonomous-kickoff template from https://github.com/pedrofuentes/autonomous-kickoff — compare `template/docs/*` against my `docs/KICKOFF.md`, `docs/ORCHESTRATION.md`, `docs/CONTINUOUS-OPERATION.md` and update them (they're generic — nothing project-specific to preserve). Leave my `MISSION.md` untouched. Show me a diff summary before applying.**
+
+### Manual fallback (no fetch)
+
+```bash
+git clone https://github.com/pedrofuentes/autonomous-kickoff.git /tmp/ak
+cp /tmp/ak/template/MISSION.md ./MISSION.md && cp -r /tmp/ak/template/docs ./docs && rm -rf /tmp/ak
+```
+Then fill `MISSION.md` (model: `examples/github-dashboard-MISSION.md`) and paste the Launch prompt.
 
 ## Worked example — a tiny CLI (proof it's product-agnostic)
 

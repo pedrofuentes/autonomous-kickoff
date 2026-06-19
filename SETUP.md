@@ -2,15 +2,20 @@
 
 A 5-minute checklist to point this at a new project.
 
-## 1. Copy the files into your project
-From this template's `template/` directory, copy into your project root:
-- `MISSION.md`
-- `docs/KICKOFF.md`, `docs/ORCHESTRATION.md`, `docs/CONTINUOUS-OPERATION.md`
+## 1. Pull the template into your project (the agent does this)
+In an agent session in your project repo, paste:
 
-(Place them alongside the `agents-template` files. If you haven't set up the harness yet, that's fine — `KICKOFF.md` Phase 0 bootstraps it.)
+> **Fetch the autonomous-kickoff template from https://github.com/pedrofuentes/autonomous-kickoff — download all files from `template/` into this project's root (`MISSION.md` + `docs/KICKOFF.md`, `docs/ORCHESTRATION.md`, `docs/CONTINUOUS-OPERATION.md`). Then read `docs/KICKOFF.md`, auto-fill what you can in `MISSION.md`, and ask me for the rest. Don't start building yet.**
 
-## 2. Fill in `MISSION.md`
-Replace every `{{...}}`. Use `examples/github-dashboard-MISSION.md` as a worked example. Checklist:
+Manual fallback:
+```bash
+git clone https://github.com/pedrofuentes/autonomous-kickoff.git /tmp/ak
+cp /tmp/ak/template/MISSION.md ./MISSION.md && cp -r /tmp/ak/template/docs ./docs && rm -rf /tmp/ak
+```
+(Place alongside the `agents-template` files; `KICKOFF.md` Phase 0 bootstraps the harness.)
+
+## 2. Fill in `MISSION.md` (the setup prompt gathers most of this)
+The setup prompt auto-fills what it can infer and asks you for the rest — this is the reference list. Replace every `{{...}}`. Use `examples/github-dashboard-MISSION.md` as a worked example. Checklist:
 - [ ] §1 Identity & mission — name, `owner/repo`, **cofounder handle**, one-line mission, users, success vision
 - [ ] §2 Product shape — product type, hosting/distribution, backend or not
 - [ ] §3 Tech stack — language, frameworks, package manager, test runner

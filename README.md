@@ -22,10 +22,14 @@ template/
     KICKOFF.md                   # generic autonomous-build prompt (reads MISSION.md)
     ORCHESTRATION.md             # the sub-agent "company" + merge protocol
     CONTINUOUS-OPERATION.md      # keep-it-running (watchdog/cron) + kill switch
+    VERSION                      # template version (SemVer); travels into your docs/VERSION
+CHANGELOG.md                     # version history + migration steps
 SETUP.md                         # how to instantiate a project
 examples/
   github-dashboard-MISSION.md    # a fully filled brief, for reference
 ```
+
+**Versioning.** The template uses [SemVer](https://semver.org/) mapped to the prompt contract (see `CHANGELOG.md`). `template/docs/VERSION` travels into your repo as `docs/VERSION`, so an agent can tell which version it's on and the **Update** / **Migrate** prompts can compare and apply the right migrations. Releases are git-tagged `vX.Y.Z`.
 
 ## Quick start
 
@@ -33,7 +37,7 @@ You don't copy files by hand — like `agents-template`, you hand the agent a pr
 
 ### 1. Set up — paste into an agent session in your project repo
 
-> **Fetch the autonomous-kickoff template from https://github.com/pedrofuentes/autonomous-kickoff — download all files from the `template/` directory into this project's root (you'll get `MISSION.md` plus `docs/KICKOFF.md`, `docs/ORCHESTRATION.md`, `docs/CONTINUOUS-OPERATION.md`). Then read `docs/KICKOFF.md`. Scan my project and auto-fill everything you can in `MISSION.md` (name, repo, stack, package manager, test runner from manifests/config); then ask me — in one batch — for what you can't infer (mission, users, success vision, MVP, security/auth, harness pre-answers, what's pre-authorized vs. gated). Show me the filled `MISSION.md` for confirmation. Do NOT start building yet.**
+> **Fetch the autonomous-kickoff template from https://github.com/pedrofuentes/autonomous-kickoff — download all files from the `template/` directory into this project's root (you'll get `MISSION.md` plus `docs/KICKOFF.md`, `docs/ORCHESTRATION.md`, `docs/CONTINUOUS-OPERATION.md`, and `docs/VERSION`). Then read `docs/KICKOFF.md`. Scan my project and auto-fill everything you can in `MISSION.md` (name, repo, stack, package manager, test runner from manifests/config); then ask me — in one batch — for what you can't infer (mission, users, success vision, MVP, security/auth, harness pre-answers, what's pre-authorized vs. gated). Show me the filled `MISSION.md` for confirmation. Do NOT start building yet.**
 
 ### 2. Launch — once `MISSION.md` looks right
 
@@ -43,7 +47,13 @@ The agent then bootstraps `agents-template`, researches, plans, builds (TDD + Se
 
 ### Update an existing project to the latest template
 
-> **Fetch the latest autonomous-kickoff template from https://github.com/pedrofuentes/autonomous-kickoff — compare `template/docs/*` against my `docs/KICKOFF.md`, `docs/ORCHESTRATION.md`, `docs/CONTINUOUS-OPERATION.md` and update them (they're generic — nothing project-specific to preserve). Leave my `MISSION.md` untouched. Show me a diff summary before applying.**
+> **Fetch the latest autonomous-kickoff template from https://github.com/pedrofuentes/autonomous-kickoff — read its `template/docs/VERSION` and compare to my `docs/VERSION`. If I'm behind, show me the `CHANGELOG.md` entries between the two versions, then update `docs/KICKOFF.md`, `docs/ORCHESTRATION.md`, `docs/CONTINUOUS-OPERATION.md` and `docs/VERSION` from `template/docs/*` (they're generic — nothing project-specific to preserve) and run any Migration steps the changelog lists for those versions. Leave my `MISSION.md` untouched. Show me a diff summary before applying.**
+
+### Migrate a running project to the latest version (mid-build)
+
+Use this when an agent is **already building** and you want it to adopt a newer template version without disrupting the run (the Update prompt above is for a repo between sessions). Paste into the running agent's session:
+
+> **Migrate this project to the latest autonomous-kickoff template, safely and mid-run. (1) First read and record my current `docs/VERSION` (if it's absent, treat my version as pre-1.0 / unversioned). (2) Fetch https://github.com/pedrofuentes/autonomous-kickoff and overwrite `docs/KICKOFF.md`, `docs/ORCHESTRATION.md`, `docs/CONTINUOUS-OPERATION.md` and `docs/VERSION` from its `template/docs/*`; leave `MISSION.md` untouched. (3) Read `CHANGELOG.md` and follow the Migration steps from my recorded old version up to the new one — apply them additively, without disrupting in-flight work: keep all current cards, worktrees, and the open increment as they are; create any missing board Status options and labels; adopt the new comment/identity and decision rules; and apply new phase gates only to work not yet started. (4) Re-read the three docs, record the new `docs/VERSION` in `PLAN.md`, then continue the build from where you left off — do this at the next safe point (after the current PR is opened) and report a one-line summary of what changed.**
 
 ### Manual fallback (no fetch)
 

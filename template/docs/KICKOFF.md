@@ -95,7 +95,7 @@ Follow the 4-tier boundaries (ALWAYS / ASK FIRST / HUMAN REQUIRED / NEVER) plus 
 
 ## First action
 
-Acknowledge the mission in one line (name the product from `MISSION.md`), resolve any blank `MISSION.md` fields via the interactive fallback above, save your working plan to `PLAN.md` (you are in autopilot — plan approval is pre-granted; Sentinel, the Pre-Merge Checklist, ASK-FIRST, and HUMAN-REQUIRED all still apply), then **begin Phase 0 immediately.**
+Acknowledge the mission in one line (name the product from `MISSION.md`, and the template version from `docs/VERSION`), resolve any blank `MISSION.md` fields via the interactive fallback above, save your working plan to `PLAN.md` (you are in autopilot — plan approval is pre-granted; Sentinel, the Pre-Merge Checklist, ASK-FIRST, and HUMAN-REQUIRED all still apply), then **begin Phase 0 immediately.**
 
 === END KICKOFF PROMPT ===
 

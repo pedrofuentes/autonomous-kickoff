@@ -5,7 +5,7 @@ A 5-minute checklist to point this at a new project.
 ## 1. Pull the template into your project (the agent does this)
 In an agent session in your project repo, paste:
 
-> **Fetch the autonomous-kickoff template from https://github.com/pedrofuentes/autonomous-kickoff — download all files from `template/` into this project's root (`MISSION.md` + `docs/KICKOFF.md`, `docs/ORCHESTRATION.md`, `docs/CONTINUOUS-OPERATION.md`). Then read `docs/KICKOFF.md`, auto-fill what you can in `MISSION.md`, and ask me for the rest. Don't start building yet.**
+> **Fetch the autonomous-kickoff template from https://github.com/pedrofuentes/autonomous-kickoff — download all files from `template/` into this project's root (`MISSION.md` + `docs/KICKOFF.md`, `docs/ORCHESTRATION.md`, `docs/CONTINUOUS-OPERATION.md`, `docs/VERSION`). Then read `docs/KICKOFF.md`, auto-fill what you can in `MISSION.md`, and ask me for the rest. Don't start building yet.**
 
 Manual fallback:
 ```bash
@@ -13,6 +13,8 @@ git clone https://github.com/pedrofuentes/autonomous-kickoff.git /tmp/ak
 cp /tmp/ak/template/MISSION.md ./MISSION.md && cp -r /tmp/ak/template/docs ./docs && rm -rf /tmp/ak
 ```
 (Place alongside the `agents-template` files; `KICKOFF.md` Phase 0 bootstraps the harness.)
+
+**Staying current.** The template is versioned (SemVer; see `CHANGELOG.md`), and your repo carries `docs/VERSION`. To upgrade later, paste the README **Update** prompt (between runs) or **Migrate a running project** prompt (mid-build) — both compare your `docs/VERSION` to the latest and apply the changelog's migration steps.
 
 ## 2. Fill in `MISSION.md` (the setup prompt gathers most of this)
 The setup prompt auto-fills what it can infer and asks you for the rest — this is the reference list. Replace every `{{...}}`. Use `examples/github-dashboard-MISSION.md` as a worked example. Checklist:

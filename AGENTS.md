@@ -14,8 +14,10 @@
 - `template/docs/KICKOFF.md` — the generic, product-neutral build prompt. **Must stay product-agnostic.**
 - `template/docs/ORCHESTRATION.md` — sub-agent fleet + merge protocol (generic).
 - `template/docs/CONTINUOUS-OPERATION.md` — the always-working loop + Decision protocol (generic).
+- `template/docs/VERSION` — the template's SemVer; travels into each consumer's `docs/VERSION`.
 - `examples/github-dashboard-MISSION.md` — a filled reference brief.
 - `README.md` / `SETUP.md` — prompt-driven setup + launch instructions.
+- `CHANGELOG.md` — version history + per-version migration steps.
 
 ## Invariants (verify before every commit)
 
@@ -24,7 +26,7 @@
 3. **Bootstrap is swappable.** The agents-template bootstrap stays isolated to the one marked paragraph in `KICKOFF.md` §Phase 0, so a different harness is a one-section swap.
 4. **Cross-doc consistency.** Policies that appear in more than one doc must read identically across `KICKOFF.md`, `ORCHESTRATION.md`, and `CONTINUOUS-OPERATION.md` — specifically: the Sentinel APPROVED/CONDITIONAL merge rule, the Definition-of-Done shape, and the **Decision protocol + label vocabulary**.
 5. **Consumer parity.** When you change a generic doc, propagate the identical content to consuming repos (the README "Update" prompt does this), and keep `examples/github-dashboard-MISSION.md` in step with the real `github-dashboard` `MISSION.md`.
-6. **Public prompt contract.** The README Set-up / Launch / Update prompts and the `=== BEGIN/END KICKOFF PROMPT ===` block in `KICKOFF.md` are the public API. Don't change their meaning without updating the README in the same commit.
+6. **Public prompt contract.** The README Set-up / Launch / Update / Migrate prompts and the `=== BEGIN/END KICKOFF PROMPT ===` block in `KICKOFF.md` are the public API. Don't change their meaning without updating the README in the same commit.
 
 ## Conventions
 
@@ -33,6 +35,7 @@
 - **Board Status values** the prompts standardize on (a Projects-v2 single-select; not labels): `Todo` · `In Progress` · `Blocked` (human must act) · `Pending Decision` (awaiting a `Decision:` answer) · `Done`.
 - **Decision directives** the prompts parse: a comment whose first line is `Decision: approved` | `Decision: option <X>` | `Decision: changes — <…>` | `Decision: hold`.
 - **Agent comment marker:** the agent self-signs every issue/PR comment it posts with `<!-- agent:autonomous-kickoff -->`, and **never** applies `decision:*` labels — so a self-signed comment is the agent's own (not a directive), and consumers verify a `decision:*` label's `labeled`-event actor is the cofounder.
+- **Versioning.** When you change any `template/docs/*` or `template/MISSION.md`, bump `template/docs/VERSION` (SemVer per the prompt contract: MAJOR breaking / MINOR additive / PATCH wording), add a `CHANGELOG.md` entry (with a **Migration** block for breaking changes), and tag the release `vX.Y.Z`. Keep `template/docs/VERSION` == the `CHANGELOG.md` latest entry == the git tag.
 - Keep pasteable prompts copy-safe: straight quotes (no smart quotes) inside any block a user copies.
 
 ## Validation (no build/test — these are the checks)

@@ -1,0 +1,60 @@
+# AGENTS.md — autonomous-kickoff
+
+<role>You maintain a **prompt/template repository**, not a code product. The "source" here is the wording of an autonomous-build kickoff — prompts and docs that *other* agents execute. Precision and consistency of that wording is the product. Changes that break the prompt contract or leak project specifics into the generic layer are defects.</role>
+
+## What this repo is
+
+`autonomous-kickoff` is the **mission layer** on top of [`agents-template`](https://github.com/pedrofuentes/agents-template). It ships a generic, product-agnostic autonomous-build prompt driven by a per-project `MISSION.md` brief. Consumers fetch `template/` into their repo and launch.
+
+> **Note:** consumer projects get their *own* `AGENTS.md` from `agents-template` (via `KICKOFF.md` Phase 0) — **not** from this repo. Do not add an `AGENTS.md` to `template/`. This file governs work on *this* repo only.
+
+## Repo map
+
+- `template/MISSION.md` — the per-project brief (placeholders the consumer fills).
+- `template/docs/KICKOFF.md` — the generic, product-neutral build prompt. **Must stay product-agnostic.**
+- `template/docs/ORCHESTRATION.md` — sub-agent fleet + merge protocol (generic).
+- `template/docs/CONTINUOUS-OPERATION.md` — the always-working loop + Decision protocol (generic).
+- `examples/github-dashboard-MISSION.md` — a filled reference brief.
+- `README.md` / `SETUP.md` — prompt-driven setup + launch instructions.
+
+## Invariants (verify before every commit)
+
+1. **Product-agnostic generic layer.** `template/docs/*` must not assume a product type, stack, host, or auth. Anything project-specific belongs only in `MISSION.md` / `examples/`. Neutral illustrations ("e.g., Pages or a registry token") are fine; hard assumptions are not.
+2. **Brief is the single source of project truth.** New project-specific knobs become `MISSION.md` sections — never hard-code them in `KICKOFF.md`.
+3. **Bootstrap is swappable.** The agents-template bootstrap stays isolated to the one marked paragraph in `KICKOFF.md` §Phase 0, so a different harness is a one-section swap.
+4. **Cross-doc consistency.** Policies that appear in more than one doc must read identically across `KICKOFF.md`, `ORCHESTRATION.md`, and `CONTINUOUS-OPERATION.md` — specifically: the Sentinel APPROVED/CONDITIONAL merge rule, the Definition-of-Done shape, and the **Decision protocol + label vocabulary**.
+5. **Consumer parity.** When you change a generic doc, propagate the identical content to consuming repos (the README "Update" prompt does this), and keep `examples/github-dashboard-MISSION.md` in step with the real `github-dashboard` `MISSION.md`.
+6. **Public prompt contract.** The README Set-up / Launch / Update prompts and the `=== BEGIN/END KICKOFF PROMPT ===` block in `KICKOFF.md` are the public API. Don't change their meaning without updating the README in the same commit.
+
+## Conventions
+
+- Markdown; keep the `=== BEGIN/END KICKOFF PROMPT ===` markers intact.
+- **Label vocabulary** the prompts depend on — reuse these exact names, don't invent synonyms: `needs:decision`, `decision:approved`, `decision:changes`, `claimed:*`, `ready`, `sentinel:important`, `sentinel:minor`, `flaky`.
+- **Decision directives** the prompts parse: a comment whose first line is `Decision: approved` | `Decision: option <X>` | `Decision: changes — <…>` | `Decision: hold`.
+- Keep pasteable prompts copy-safe: straight quotes (no smart quotes) inside any block a user copies.
+
+## Validation (no build/test — these are the checks)
+
+```bash
+# 1) No project specifics leaked into the generic layer (expect NO matches):
+grep -nE 'React|Vite|Tailwind|\bPAT\b|github-dashboard' template/docs/*.md
+# 2) Placeholders live only in the brief. Expect real `{{...}}` only under
+#    template/MISSION.md. (KICKOFF.md §0 and §Phase 0 also contain two backticked
+#    *references* to the word `{{placeholder}}` — those are intentional, not stray fields.)
+grep -rn '{{' template/
+# 3) Links resolve from a consumer repo root (docs/ and MISSION.md are siblings there).
+```
+
+If you add a real validation script later, wire it here and in CI.
+
+## Boundaries
+
+- ✅ **ALWAYS**: keep the generic layer product-neutral; update the README + consumers when the prompt contract changes; preserve label/section names.
+- ⚠️ **ASK FIRST**: renaming files/sections the README or consumers reference; changing the launch-prompt wording; restructuring `MISSION.md` sections.
+- 🚫 **NEVER**: bake a specific product/stack into `template/docs/*`; commit secrets; edit `agents-template`'s own files from here; add an `AGENTS.md` to `template/`.
+
+## Commits
+
+- Git identity: `pedrofuentes <git@pedrofuent.es>`. Conventional commits (`docs:`, `feat:`, `fix:`, `chore:`).
+- Co-author trailer: `Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>`.
+- For substantive prompt/wording changes, do a separate reviewer pass (Sentinel-style) before pushing — the author shouldn't be the sole reviewer of wording that agents will execute autonomously.

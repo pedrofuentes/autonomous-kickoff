@@ -12,18 +12,28 @@ How the autonomous build is organized as a small "company" of sub-agents operati
 | **Architecture** | `general-purpose` sub-agent | ADRs in `DECISIONS.md`, core/integration layer design, auth/security design, data model, deploy/distribution | Architecture decisions are ASK-FIRST unless pre-authorized by `MISSION.md` §9 |
 | **Engineering guild** | `general-purpose` sub-agents (1 per increment) | Implement one issue each, TDD, in an isolated worktree; open a PR; **stop & report** | **Delegated implementer** — never self-reviews, never merges |
 | **Test / QA** | `general-purpose` / `task` sub-agents | Test data, e2e, accessibility + performance/security audits | Tests are first-class; coverage ratchets up |
-| **Sentinel** | full-capability sub-agent w/ `docs/SENTINEL.md` as system prompt | Independent merge gate; APPROVED / CONDITIONAL / REJECTED | **Coder ≠ reviewer, always.** Must be able to spawn its own dimension sub-agents |
+| **Sentinel** | full-capability sub-agent w/ `docs/SENTINEL.md` as system prompt | Independent merge gate; APPROVED / CONDITIONAL / REJECTED | **Coder ≠ reviewer, always.** Spawns its own A–F dimension agents where the runtime allows — else the Lead spawns them on its behalf, or Sentinel-in-CI covers the review (see §Nested delegation) |
 | **DevOps** | `general-purpose` sub-agent | CI workflows, Sentinel-in-CI (Method B), deploy/distribution, branch protection | CI/CD changes are pre-authorized per `MISSION.md` §9 |
 
 ## Non-negotiable harness rules the fleet must honor
 
 - **Sub-agents do NOT inherit `AGENTS.md`.** When spawning any sub-agent, **copy into its prompt**: the TDD choreography (`test(red)` → `feat(green)` → `refactor`), the 4-tier Boundaries, and the **Delegated Implementation rule** (code → test → pre-push verify → push → open PR → **stop**; report PR URL + HEAD SHA upward; do not invoke Sentinel on your own work, do not merge).
 - **Sentinel is invoked by an agent OUTSIDE the entire implementation chain.** For nested delegation (Lead → engineer → helper), each implementer stops and reports upward; only the Lead (or a sibling not in the chain) invokes Sentinel.
-- **Sentinel must be a full-capability model** (≥ Sonnet-class) able to run commands and spawn the A–F dimension sub-agents. Never a fast/cheap/explore-class model.
+- **Sentinel must be a full-capability model** (≥ Sonnet-class) able to run commands and spawn the A–F dimension sub-agents. Never a fast/cheap/explore-class model. *(Where the runtime forbids nested spawning, the Lead spawns the A–F agents on Sentinel's behalf, or Sentinel-in-CI performs the review — see §Nested delegation.)*
 
-### Nested delegation — expected, and degrades gracefully
+### Nested delegation — probe it, expect it, degrade gracefully
 
-Sub-agents may spawn their **own** sub-agents (an engineer spins up a test-data or research helper; Sentinel spawns its A–F dimension agents; a research lead fans out to per-topic researchers). This recursive "agents creating agents" is the intended operating mode. **But it depends on the runtime:** where your platform does **not** let a sub-agent spawn further sub-agents, the nearest agent that *can* spawn does so on its behalf — record the limitation and continue; never block on it. In every case the implementation chain **reports upward**, and Sentinel is invoked from **outside** the entire chain (coder ≠ reviewer, at any depth).
+Sub-agents may spawn their **own** sub-agents (an engineer spins up a test-data or research helper; Sentinel spawns its A–F dimension agents; a research lead fans out to per-topic researchers). This recursive "agents creating agents" is the intended operating mode — **but it depends on the runtime.**
+
+**Probe it once, up front (in Phase 0).** Don't assume — measure. Spawn one trivial sub-agent that returns a token (the level-1 check); then instruct *that* sub-agent to spawn its own trivial sub-agent and report back (the nested check). Record the result as `capabilities: full | flat | none` in `PLAN.md`. Keep it cheap and time-boxed, and classify **per check** (fail safe): a failed or timed-out level-1 spawn → `none`; a successful level-1 but failed/timed-out nested spawn → `flat`; both succeed → `full`. The result selects a tier:
+
+| Tier | Probe | What it means | Action |
+|------|-------|---------------|--------|
+| **Full** | level-1 ✓, nested ✓ | Intended mode: parallel fleet, recursion, Sentinel spawns its own A–F dimension agents. | Proceed normally. |
+| **Flat** | level-1 ✓, nested ✗ | The Lead can delegate, but engineers/Sentinel can't sub-spawn. **coder ≠ reviewer still holds** — Sentinel is a separate agent from the engineer. | **Non-blocking WARNING.** The nearest agent that *can* spawn (the Lead) spawns helpers and Sentinel's A–F agents **on their behalf**; log the limitation in `PLAN.md` + `LEARNINGS.md`; **never block on it.** |
+| **None** | level-1 ✗ | No delegation at all. coder ≠ reviewer **cannot** be met by a separate agent, and there is no parallel fleet. | Raise a **`needs:decision`** capability gate (`CONTINUOUS-OPERATION.md` Tier 3), @-mention the cofounder (file the issue even before the Phase 1 board exists; it joins the board once created), and **hold the first feature-PR merge** — while Phases 0–2 (bootstrap, research, PRD, board, architecture, CI scaffolding) still proceed. Documented fallback: **Sentinel-in-CI (Method B) + branch protection** as the enforced independent review (a fresh CI run has no memory of authoring the diff, so coder ≠ reviewer holds at the *process* level), plus the Tier-2 Copilot cloud coding agent for throughput. Merge only after `Decision: approved`. |
+
+In every tier the implementation chain **reports upward**, and Sentinel is invoked from **outside** the entire chain (coder ≠ reviewer, at any depth).
 - **One worktree per increment.** `git worktree add .worktrees/<name> -b <type>/<name> main`. Never commit on `main`.
 
 ## Parallelization model

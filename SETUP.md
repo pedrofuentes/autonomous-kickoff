@@ -24,18 +24,23 @@ The setup prompt auto-fills what it can infer and asks you for the rest — this
 - [ ] §4 MVP scope — the must-have v1 features (+ what's out of scope)
 - [ ] §5 Security/privacy/data — auth model, constraints, network allowlist, risks to research
 - [ ] §6 Reuse & references — prior art to study/port
-- [ ] §7 Harness pre-answers — coverage threshold, git identity, AI attribution, Sentinel method, patterns, forbidden actions, branch protection (these stop agents-template's setup from stalling)
+- [ ] §7 Harness pre-answers — coverage threshold, git identity, AI attribution, Sentinel method, **agent identity / attended-mode opt-in**, patterns, forbidden actions, branch protection (these stop agents-template's setup from stalling)
 - [ ] §8 Definition of Done — project-specific acceptance (a live URL, a published package, etc.), each item phrased as an executable `AC-n` test
 - [ ] §9 Authorization — the five-tier matrix (`auto` · `auto-with-audit` · `time-boxed` · `human-required` · `never`): time-box, risk tolerance, production-release gate, project overrides
 - [ ] §10 Resource governance — concurrency caps + per-milestone cost budget
 
 > Leave a field as `{{...}}` only if you *want* the agent to handle it at launch — for **vision-level** fields (mission, users, success vision) the agent acts as a **thought partner**, drafting a proposal from your repo + light research and refining it with you, not just collecting answers.
 
-## 3. (Optional, for durable 24/7) Enable platform toggles
+## 3. Provision the agent identity (or opt into attended mode)
+For decisions to be un-forgeable and the agent to merge unattended, it must run under **its own** GitHub identity, not yours (`MISSION.md` §7). You don't have to set this up alone — at launch **the agent walks you through it** (`CONTINUOUS-OPERATION.md` §Agent identity): a **GitHub App** (no second account, recommended), a **machine-user + fine-grained PAT**, the **Copilot coding agent**, or `github-actions[bot]` for the cloud path. It gives the exact steps and verifies the result with `gh api user`.
+
+**Just want to start now?** Set `attended-single-operator: yes` in `MISSION.md` §7 to run under your own account **while you're present** — gate answers go through the live CLI, it runs Tier-1 only (no unattended Tier-2), all other protections stay on. Upgrade to a distinct identity later to go fully unattended.
+
+## 4. (Optional, for durable 24/7) Enable platform toggles
 Per `CONTINUOUS-OPERATION.md` Tier 2: enable the Copilot coding agent, GitHub Actions, and your deploy/distribution target (e.g. Pages or a registry token).
 
-## 4. Launch
-Open a fresh agent session in the repo and paste the launch pointer from the README (or the `BEGIN…END` block in `docs/KICKOFF.md`). Watch the GitHub Project board; respond fast when @-mentioned on a gate. **Keep it running:** the **Tier-1** watchdog runs only while this CLI session is open; for **machine-off, unattended** operation enable **Tier 2** (§3). To restart the heartbeat after closing the CLI, a crash, the kill switch, or an update, see *Starting & restarting the heartbeat* in `CONTINUOUS-OPERATION.md`.
+## 5. Launch
+Open a fresh agent session in the repo and paste the launch pointer from the README (or the `BEGIN…END` block in `docs/KICKOFF.md`). Watch the GitHub Project board; respond fast when @-mentioned on a gate. **Keep it running:** the **Tier-1** watchdog runs only while this CLI session is open; for **machine-off, unattended** operation enable **Tier 2** (§4). To restart the heartbeat after closing the CLI, a crash, the kill switch, or an update, see *Starting & restarting the heartbeat* in `CONTINUOUS-OPERATION.md`.
 
-## 5. Pause/stop
+## 6. Pause/stop
 See the **Kill switch** section of `CONTINUOUS-OPERATION.md`.

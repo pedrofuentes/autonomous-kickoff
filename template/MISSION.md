@@ -49,7 +49,8 @@ List the must-have features for the first shippable version (milestone **M1**). 
 - **Git author identity (commits):** {{Name <email>}}
 - **AI attribution (commit `Co-authored-by` trailer):** {{Name <email>}}
 - **Sentinel method:** {{B (CI, enforced by branch protection) for production + A (sub-agent) in dev — recommended.}}
-- **Agent identity (for unattended runs):** {{the distinct GitHub identity the agent runs as — a GitHub App, the Copilot coding agent (`copilot-swe-agent[bot]`), or `github-actions[bot]` — NOT your personal account. Required so decisions can't be forged and the agent can merge (author ≠ approver). See `CONTINUOUS-OPERATION.md` §Agent identity.}}
+- **Agent identity (for unattended runs):** {{the distinct GitHub identity the agent runs as — a GitHub App, the Copilot coding agent (`copilot-swe-agent[bot]`), or `github-actions[bot]` — NOT your personal account. Required so decisions can't be forged and the agent can merge (author ≠ approver). The agent will **walk you through provisioning** one (see `CONTINUOUS-OPERATION.md` §Agent identity).}}
+- **Attended single-operator mode (opt-in)** — set `attended-single-operator:` to {{`no` (default), or `yes — I accept running under my own identity while present` to start now under your own account without a separate identity: the agent takes gate answers via the **live CLI** (the board decision channel is treated as untrusted), runs **Tier-1 only (no unattended Tier-2)**, and keeps all other v2 protections. Provision a distinct identity (above) to go fully unattended.}}
 - **Enforced coding patterns:** {{project-specific conventions to enforce.}}
 - **Forbidden actions (NEVER):** {{project-specific hard "never"s — secrets, egress, etc.}}
 - **Enable branch protection on `main`?** {{yes/no — yes recommended.}}

@@ -49,6 +49,8 @@
 - **Git author identity (commits):** pedrofuentes <git@pedrofuent.es>
 - **AI attribution (commit `Co-authored-by` trailer):** Copilot <223556219+Copilot@users.noreply.github.com>
 - **Sentinel method:** B (CI, enforced by branch protection) for production + A (sub-agent) in dev.
+- **Agent identity (for unattended runs):** a private **GitHub App** `github-dashboard-bot` (`github-dashboard-bot[bot]`) — a distinct identity, NOT @pedrofuentes — installed on the repo with Contents/Issues/Pull requests/Projects (+ Actions) read-write; the agent authenticates via its installation token. (Required so decisions can't be forged and the agent can merge — author ≠ approver.)
+- **Attended single-operator mode** — `attended-single-operator: no` (this brief runs unattended under the App identity above).
 - **Enforced coding patterns:** client-only (no backend); validate every GitHub API response with Zod; conditional requests (ETag/`If-None-Match`) + batched GraphQL to respect the 5,000 req/hr limit; functional React components + hooks; named exports; accessible (WCAG 2.1 AA) components; secrets never touch the bundle.
 - **Forbidden actions (NEVER):** commit a PAT or any secret; send user code/data to any non-GitHub origin (only `api.github.com`, `github.com/login/*`, `*.githubusercontent.com`); introduce a backend/server/proxy without explicit cofounder approval; bypass Sentinel.
 - **Enable branch protection on `main`?** Yes.

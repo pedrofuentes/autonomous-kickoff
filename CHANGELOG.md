@@ -10,6 +10,38 @@ All notable changes to the **autonomous-kickoff** template are recorded here. Ve
 The current version lives in [`template/docs/VERSION`](template/docs/VERSION) and travels into each
 consumer's `docs/VERSION`. Releases are git-tagged `vX.Y.Z`.
 
+## [2.1.0] — 2026-06-19
+
+Identity onboarding — make v2.0.0's required agent identity *easy to adopt* (guided provisioning) and give
+a solo operator a safe way to *start now* (attended mode). Additive; no change to the v2.0.0 merge config,
+authorization tiers, or untrusted-input rules.
+
+### Added
+- **Guided identity-provisioning walkthrough** (`CONTINUOUS-OPERATION.md` §Agent identity). When the
+  Phase-0 self-check needs a distinct identity, the agent now *helps*: ranked options — **GitHub App** (no
+  second account, recommended), **machine-user + fine-grained PAT**, **Copilot coding agent**,
+  `github-actions[bot]` — with exact provisioning steps, and it **verifies** the result (`gh api user`)
+  before clearing the identity gate. It can't create the account/click the UI (human-only) but guides the
+  cofounder through it (live in the CLI if present) instead of just filing a terse `BLOCKED:` gate.
+- **Attended single-operator mode** (opt-in via `MISSION.md` §7). A present cofounder may run under their
+  **own** identity without provisioning a separate one: gate answers come through the **live CLI session**
+  (the async board `decision:*`/`Decision:` channel is treated as **untrusted**, since a shared token can't
+  prove authorship), **Tier-2 unattended operation is disabled** (Tier-1 in-session only), and a startup
+  banner states the reduced posture and recommends upgrading. All other v2 protections (untrusted-input
+  rule, self-signature marker, tiered authorization, Sentinel-in-CI merge gate) are unchanged.
+
+### Changed
+- The Phase-0 identity self-check (`KICKOFF.md` Phase 0 + Operating-contract rule #4, `CONTINUOUS-OPERATION.md`
+  §Agent identity) now branches: shared identity **+ attended opt-in → attended posture**; **no opt-in →
+  offer the walkthrough + fail-closed `BLOCKED:` gate** (the prior behavior).
+- `SETUP.md` gains a "provision the agent identity (or opt into attended mode)" step; the README and the
+  filled example brief surface both paths.
+
+### MIGRATIONS (from 2.0.0)
+- None required. To adopt: optionally set `attended-single-operator: yes` in `MISSION.md` §7 to start under
+  your own identity now, or let the agent walk you through provisioning a distinct identity at launch. Update
+  via the README **Update** prompt (re-copies the three `docs/*` + `docs/VERSION`).
+
 ## [2.0.0] — 2026-06-19
 
 Panel-driven hardening toward full, unattended, co-founder-mode autonomy. Six expert reviews (autonomy

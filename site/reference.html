@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reference &amp; prompt library &mdash; autonomous-kickoff</title>
+  <meta name="description" content="The reference hub for autonomous-kickoff: every copy-paste prompt (Set up, Launch, Update, Migrate, Continue, Status, Pause/Resume), the label, board-status, authorization-tier and decision vocabulary, a worked example, and an FAQ.">
+  <link rel="canonical" href="https://pedrofuent.es/autonomous-kickoff/reference.html">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="autonomous-kickoff &mdash; reference &amp; prompt library">
+  <meta property="og:description" content="Every copy-paste prompt, the full label/status/tier vocabulary, a worked example, and an FAQ.">
+  <meta property="og:url" content="https://pedrofuent.es/autonomous-kickoff/reference.html">
+  <meta property="og:image" content="https://pedrofuent.es/autonomous-kickoff/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/reference.css">
+
+  <script>
+    /* Hide reveal elements ONLY when JS can reliably animate them in.
+       No-JS / reduced-motion / crawlers never get the hidden state. */
+    (function () {
+      try {
+        if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        if (!("IntersectionObserver" in window)) return;
+        document.documentElement.classList.add("js-anim");
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" data-nav-open="false">
+    <div class="container nav">
+      <a class="brand" href="./" aria-label="autonomous-kickoff home">
+        <span class="brand-dot" aria-hidden="true"></span>
+        autonomous<span class="brand-mark">-kickoff</span>
+      </a>
+      <nav class="nav-links" id="primary-nav" aria-label="Primary">
+        <a href="index.html#why">Why</a>
+        <a href="index.html#how">How it works</a>
+        <a href="index.html#sentinel">Sentinel</a>
+        <a href="index.html#always">Always-on</a>
+        <a href="reference.html" aria-current="page">Reference</a>
+      </nav>
+      <div class="nav-right">
+        <a class="icon-link" href="https://github.com/pedrofuentes/autonomous-kickoff" aria-label="View on GitHub" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.5v-1.7c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 5 18.3 5.3 18.3 5.3c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.6.8.5 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"/></svg>
+        </a>
+        <a class="btn btn-primary btn-sm nav-desktop-cta" href="index.html#how">How it works</a>
+        <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-nav">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="container ref-hero">
+      <span class="eyebrow"><span class="brand-dot" aria-hidden="true"></span> Reference</span>
+      <h1>The prompt library &amp; reference</h1>
+      <p class="lead">Everything you paste, in one place: the label, status, tier, and decision vocabulary the prompts depend on, a worked example, and answers to common questions. Each prompt block is copy-safe; paste it verbatim into your agent session.</p>
+    </section>
+
+    <div class="container ref-layout">
+      <!-- TABLE OF CONTENTS -->
+      <aside class="toc" aria-label="On this page">
+        <h2>On this page</h2>
+        <nav>
+          <span class="toc-group">Prompt library</span>
+          <a href="#set-up">Set up</a>
+          <a href="#launch">Launch</a>
+          <a href="#update">Update</a>
+          <a href="#migrate">Migrate</a>
+          <a href="#continue">Continue</a>
+          <a href="#status">Status</a>
+          <a href="#pause-resume">Pause / Resume</a>
+          <a href="#manual">Manual fallback</a>
+          <span class="toc-group">Reference</span>
+          <a href="#example">Worked example</a>
+          <a href="#vocabulary">Vocabulary</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+      </aside>
+
+      <div class="ref-content">
+
+        <!-- PROMPT LIBRARY -->
+        <section class="ref-section" id="prompts" aria-labelledby="prompts-h">
+          <h2 id="prompts-h">Prompt library</h2>
+          <p class="lead">Two prompts, <strong>Set up</strong> and <strong>Launch</strong>, are all you need to begin. The rest keep the template current and the run under your control.</p>
+
+          <!-- SET UP -->
+          <article class="prompt" id="set-up">
+            <div class="prompt-head">
+              <div class="prompt-title">
+                <h3><a href="#set-up">Set up</a> <span class="prompt-tag">to begin</span></h3>
+                <p class="prompt-when">Pull the template into your repo and fill in <code>MISSION.md</code>. Paste into an agent session in your project repo.</p>
+              </div>
+              <button class="copy-btn" type="button" data-copy-target="p-setup" data-copy-name="the Set up prompt">
+                <svg class="ico-copy" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+                <svg class="ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>
+                <span class="copy-label">Copy</span>
+              </button>
+            </div>
+            <div class="prompt-body"><pre><code id="p-setup">Fetch the autonomous-kickoff template from https://github.com/pedrofuentes/autonomous-kickoff &mdash; download all files from the template/ directory into this project's root (you'll get MISSION.md plus docs/KICKOFF.md, docs/ORCHESTRATION.md, docs/CONTINUOUS-OPERATION.md, and docs/VERSION). Then read docs/KICKOFF.md. Scan my project and auto-fill everything you can in MISSION.md (name, repo, stack, package manager, test runner from manifests/config); then ask me &mdash; in one batch &mdash; for the concrete facts you can't infer (MVP, security/auth, harness pre-answers, what's pre-authorized vs. gated); and for the vision-level fields (mission, target users, success vision), be a thought partner &mdash; propose a concrete draft from what you found + light research, ask me a few focused questions, and refine to my approval (help me sharpen it, don't just collect; don't invent product scope). Show me the filled MISSION.md for confirmation. Do NOT start building yet.</code></pre></div>
+          </article>
+
+          <!-- LAUNCH -->
+          <article class="prompt" id="launch">
+            <div class="prompt-head">
+              <div class="prompt-title">
+                <h3><a href="#launch">Launch</a> <span class="prompt-tag">to begin</span></h3>
+                <p class="prompt-when">Once <code>MISSION.md</code> looks right, start the build. Paste into a fresh agent session in the repo.</p>
+              </div>
+              <button class="copy-btn" type="button" data-copy-target="p-launch" data-copy-name="the Launch prompt">
+                <svg class="ico-copy" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+                <svg class="ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>
+                <span class="copy-label">Copy</span>
+              </button>
+            </div>
+            <div class="prompt-body"><pre><code id="p-launch">Read docs/KICKOFF.md (your operating instructions) and MISSION.md (this project's brief), then begin Phase 0. Work continuously until the current milestone's Definition of Done is met, then open the next-milestone Decision gate and continue on approval; only stop for a HUMAN-REQUIRED gate or when the project is complete.</code></pre></div>
+            <p class="prompt-note">Prefer a single paste? Use <strong>Set up</strong> and append: <em>"&hellip;then, once I confirm MISSION.md, immediately read docs/KICKOFF.md and begin Phase 0."</em></p>
+          </article>
+
+          <!-- UPDATE -->
+          <article class="prompt" id="update">
+            <div class="prompt-head">
+              <div class="prompt-title">
+                <h3><a href="#update">Update</a> <span class="prompt-tag">maintain</span></h3>
+                <p class="prompt-when">Adopt a newer template version <strong>between sessions</strong>.</p>
+              </div>
+              <button class="copy-btn" type="button" data-copy-target="p-update" data-copy-name="the Update prompt">
+                <svg class="ico-copy" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+                <svg class="ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>
+                <span class="copy-label">Copy</span>
+              </button>
+            </div>
+            <div class="prompt-body"><pre><code id="p-update">Fetch the latest autonomous-kickoff template from https://github.com/pedrofuentes/autonomous-kickoff &mdash; read its template/docs/VERSION and compare to my docs/VERSION. If I'm behind, show me the CHANGELOG.md entries between the two versions, then update docs/KICKOFF.md, docs/ORCHESTRATION.md, docs/CONTINUOUS-OPERATION.md and docs/VERSION from template/docs/* (they're generic &mdash; nothing project-specific to preserve) and run any Migration steps the changelog lists for those versions. Leave my MISSION.md untouched &mdash; but if a Migration step requires a MISSION.md change (a new section, or the &sect;9 schema change in a MAJOR bump), don't edit it; hand me a checklist of those manual follow-ups and flag that the updated docs may reference brief sections/knobs I haven't added yet. Show me a diff summary before applying, then re-arm the continuous-operation watchdog (see CONTINUOUS-OPERATION.md) so work resumes.</code></pre></div>
+          </article>
+
+          <!-- MIGRATE -->
+          <article class="prompt" id="migrate">
+            <div class="prompt-head">
+              <div class="prompt-title">
+                <h3><a href="#migrate">Migrate</a> <span class="prompt-tag">maintain</span></h3>
+                <p class="prompt-when">Adopt a newer template version <strong>mid-run</strong>, while an agent is already building. Paste into the running session.</p>
+              </div>
+              <button class="copy-btn" type="button" data-copy-target="p-migrate" data-copy-name="the Migrate prompt">
+                <svg class="ico-copy" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+                <svg class="ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>
+                <span class="copy-label">Copy</span>
+              </button>
+            </div>
+            <div class="prompt-body"><pre><code id="p-migrate">Migrate this project to the latest autonomous-kickoff template, safely and mid-run. (1) First read and record my current docs/VERSION (if it's absent, treat my version as pre-1.0 / unversioned). (2) Fetch https://github.com/pedrofuentes/autonomous-kickoff and overwrite docs/KICKOFF.md, docs/ORCHESTRATION.md, docs/CONTINUOUS-OPERATION.md and docs/VERSION from its template/docs/*; leave MISSION.md untouched. (3) Read CHANGELOG.md and follow the Migration steps from my recorded old version up to the new one &mdash; apply them additively, without disrupting in-flight work: keep all current cards, worktrees, and the open increment as they are; create any missing board Status options and labels; adopt the new comment/identity and decision rules; and apply new phase gates only to work not yet started. Any Migration step that needs a MISSION.md edit (a new section, or the &sect;9 tier-matrix schema in a MAJOR bump) &mdash; don't touch MISSION.md; hand me a checklist of those manual follow-ups and flag that the new docs reference brief sections/knobs I must add for them to fully resolve. (4) Re-read the three docs, record the new docs/VERSION in PLAN.md, re-arm the watchdog, then continue the build from where you left off &mdash; do this at the next safe point (after the current PR is opened) and report a one-line summary of what changed.</code></pre></div>
+          </article>
+
+          <!-- CONTINUE -->
+          <article class="prompt" id="continue">
+            <div class="prompt-head">
+              <div class="prompt-title">
+                <h3><a href="#continue">Continue</a> <span class="prompt-tag">steer</span></h3>
+                <p class="prompt-when">Resume or kick the next round by hand: after a stop, a closed CLI, or to inject a new direction.</p>
+              </div>
+              <button class="copy-btn" type="button" data-copy-target="p-continue" data-copy-name="the Continue prompt">
+                <svg class="ico-copy" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+                <svg class="ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>
+                <span class="copy-label">Copy</span>
+              </button>
+            </div>
+            <div class="prompt-body"><pre><code id="p-continue">Continue the autonomous build. Re-read docs/KICKOFF.md and MISSION.md, check the GitHub Project board, and if the watchdog isn't armed, re-arm it (see Starting &amp; restarting the heartbeat in CONTINUOUS-OPERATION.md). If the current milestone still has ready or in-progress work, resume it. If a milestone just shipped (board empty, Definition of Done met), propose the next ROADMAP.md milestone as a DECISION: issue, @-mention me, and continue on my approval or the &sect;9 time-box. If I've added a new direction in ROADMAP.md/MISSION.md, use that. Don't stop while ready work remains.</code></pre></div>
+          </article>
+
+          <!-- STATUS -->
+          <article class="prompt" id="status">
+            <div class="prompt-head">
+              <div class="prompt-title">
+                <h3><a href="#status">Status</a> <span class="prompt-tag">read-only</span></h3>
+                <p class="prompt-when">A "where are we?" check-in that changes nothing.</p>
+              </div>
+              <button class="copy-btn" type="button" data-copy-target="p-status" data-copy-name="the Status prompt">
+                <svg class="ico-copy" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+                <svg class="ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>
+                <span class="copy-label">Copy</span>
+              </button>
+            </div>
+            <div class="prompt-body"><pre><code id="p-status">Status check &mdash; read-only, change nothing (no commits, no board edits, no gates). Give me a one-screen summary: the current milestone and its Definition-of-Done progress; board counts (Todo / In Progress / Blocked / Pending Decision / Done) and any cards waiting on me (needs:decision / blocked); open high/critical security alerts or detected secrets; what's in flight (worktrees / open PRs / latest Sentinel verdicts); the template version from docs/VERSION; and the single next action you'll take.</code></pre></div>
+          </article>
+
+          <!-- PAUSE / RESUME -->
+          <article class="prompt" id="pause-resume">
+            <div class="prompt-head">
+              <div class="prompt-title">
+                <h3><a href="#pause-resume">Pause</a> <span class="prompt-tag">control</span></h3>
+                <p class="prompt-when">Stop the autonomous loop on demand.</p>
+              </div>
+              <button class="copy-btn" type="button" data-copy-target="p-pause" data-copy-name="the Pause prompt">
+                <svg class="ico-copy" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+                <svg class="ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>
+                <span class="copy-label">Copy</span>
+              </button>
+            </div>
+            <div class="prompt-body"><pre><code id="p-pause">Pause the autonomous build. List active schedules and stop the watchdog (manage_schedule action=stop id=&lt;id&gt;); if Tier-2 is enabled, disable the agent-tick workflow (Actions tab &rarr; Disable). Record where you are in PLAN.md, leave open PRs, worktrees, and the board as-is, start no new work, and tell me exactly how to resume.</code></pre></div>
+          </article>
+
+          <article class="prompt" id="resume">
+            <div class="prompt-head">
+              <div class="prompt-title">
+                <h3><a href="#resume">Resume</a> <span class="prompt-tag">control</span></h3>
+                <p class="prompt-when">Re-arm the heartbeat after a pause, crash, or closed CLI.</p>
+              </div>
+              <button class="copy-btn" type="button" data-copy-target="p-resume" data-copy-name="the Resume prompt">
+                <svg class="ico-copy" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+                <svg class="ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>
+                <span class="copy-label">Copy</span>
+              </button>
+            </div>
+            <div class="prompt-body"><pre><code id="p-resume">Resume the autonomous build. Re-read docs/KICKOFF.md and MISSION.md, restore any ready labels you froze, re-arm the Tier-1 watchdog (manage_schedule action=create interval=20m prompt=&lt;the watchdog prompt in CONTINUOUS-OPERATION.md&gt;) and confirm it's listed (manage_schedule action=list); re-enable the agent-tick workflow if you use Tier-2; then continue from the board.</code></pre></div>
+          </article>
+
+          <!-- MANUAL FALLBACK -->
+          <article class="prompt" id="manual">
+            <div class="prompt-head">
+              <div class="prompt-title">
+                <h3><a href="#manual">Manual fallback</a> <span class="prompt-tag">no fetch</span></h3>
+                <p class="prompt-when">If the agent can't fetch, clone and copy the template by hand, then fill <code>MISSION.md</code> and paste <strong>Launch</strong>.</p>
+              </div>
+              <button class="copy-btn" type="button" data-copy-target="p-manual" data-copy-name="the manual fallback commands">
+                <svg class="ico-copy" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+                <svg class="ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>
+                <span class="copy-label">Copy</span>
+              </button>
+            </div>
+            <div class="prompt-body"><pre><code id="p-manual">git clone https://github.com/pedrofuentes/autonomous-kickoff.git /tmp/ak
+cp /tmp/ak/template/MISSION.md ./MISSION.md &amp;&amp; cp -r /tmp/ak/template/docs ./docs &amp;&amp; rm -rf /tmp/ak</code></pre></div>
+          </article>
+        </section>
+
+        <!-- WORKED EXAMPLE -->
+        <section class="ref-section" id="example" aria-labelledby="example-h">
+          <h2 id="example-h">Worked example: a tiny CLI</h2>
+          <p class="lead">Proof it's product-agnostic: a minimal <code>MISSION.md</code> for a one-command CLI published to npm. Only the load-bearing fields are shown; the rest follow the template defaults.</p>
+          <article class="prompt">
+            <div class="prompt-head">
+              <div class="prompt-title">
+                <h3>slugify-cli MISSION.md</h3>
+                <p class="prompt-when">Then, in a fresh session: <em>Read docs/KICKOFF.md + MISSION.md, begin Phase 0.</em></p>
+              </div>
+              <button class="copy-btn" type="button" data-copy-target="p-example" data-copy-name="the slugify-cli example brief">
+                <svg class="ico-copy" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+                <svg class="ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>
+                <span class="copy-label">Copy</span>
+              </button>
+            </div>
+            <div class="prompt-body"><pre><code id="p-example"># MISSION &mdash; slugify-cli
+
+## 1. Identity &amp; mission
+- Project name: slugify-cli
+- Repo: yourname/slugify-cli
+- Cofounder handle: @yourname
+- One-line mission: A zero-dependency CLI that turns any text into a URL-safe slug.
+- Target users &amp; the problem: Devs who want consistent slugs in scripts/CI without a web tool.
+- Success vision: the go-to npx one-liner for slugs.
+
+## 2. Product shape
+- Product type: CLI
+- Hosting / distribution: npm package (npx slugify-cli "Hello World" &rarr; hello-world)
+- Backend? None.
+
+## 3. Tech stack
+- Language: TypeScript &middot; Package manager: npm &middot; Test runner: Vitest
+
+## 4. MVP scope (v1)
+1. slugify "&lt;text&gt;" prints the slug
+2. flags: --sep &lt;char&gt; (default -), --lower/--no-lower
+3. reads from stdin when no argument is given
+
+## 5. Security, privacy &amp; data
+- No auth, no network calls, no data collected. Network allowlist: N/A.
+
+## 7. Harness pre-answers
+- Coverage threshold: 90 &middot; Sentinel: B (CI) + A (dev)
+- Git identity / AI attribution: &lt;fill in&gt;
+- NEVER: publish a release with failing tests.
+
+## 8. Definition of Done
+- npx slugify-cli "A B" prints a-b from the published package; README has usage + examples.
+
+## 9. Authorization
+- Tiers per template &sect;9. auto: the &sect;3 deps + the npm-publish CI workflow. human-required: the npm publish token + the first npm publish of each release. Default time-box 24h; risk tolerance balanced.</code></pre></div>
+          </article>
+        </section>
+
+        <!-- VOCABULARY -->
+        <section class="ref-section" id="vocabulary" aria-labelledby="vocab-h">
+          <h2 id="vocab-h">Vocabulary</h2>
+          <p class="lead">The exact names the prompts depend on. Reuse them verbatim: the agent and the board both parse these, and synonyms break the contract.</p>
+
+          <h3 style="margin-top: var(--sp-6); margin-bottom: var(--sp-4);">Labels</h3>
+          <div class="table-wrap">
+            <table class="vocab">
+              <thead><tr><th scope="col">Label</th><th scope="col">Meaning</th></tr></thead>
+              <tbody>
+                <tr><td><span class="chip chip--label">needs:decision</span></td><td>A card is waiting for the cofounder to answer a <code>Decision:</code>.</td></tr>
+                <tr><td><span class="chip chip--ok">decision:approved</span></td><td>The cofounder approved. Applied by the cofounder, <strong>never</strong> the agent.</td></tr>
+                <tr><td><span class="chip chip--warn">decision:changes</span></td><td>The cofounder requested changes to a proposal.</td></tr>
+                <tr><td><span class="chip chip--danger">blocked</span></td><td>A human must perform an action (a toggle, a token, a scope) before work proceeds.</td></tr>
+                <tr><td><span class="chip chip--danger">security</span></td><td>A Dependabot / code-scanning / secret-scanning finding. High/critical preempt the queue.</td></tr>
+                <tr><td><span class="chip">claimed:&lowast;</span></td><td>An agent has atomically claimed this card. Created on the fly when claiming.</td></tr>
+                <tr><td><span class="chip chip--label">ready</span></td><td>Dependencies are merged; the card is workable.</td></tr>
+                <tr><td><span class="chip">sentinel:important</span></td><td>A Sentinel 🟡 follow-up to resolve before the milestone signs off.</td></tr>
+                <tr><td><span class="chip">sentinel:minor</span></td><td>A Sentinel 🟢 nit.</td></tr>
+                <tr><td><span class="chip">flaky</span></td><td>A known-flaky test, tracked.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="margin-top: var(--sp-7); margin-bottom: var(--sp-4);">Board Status</h3>
+          <p class="text-muted" style="margin-bottom: var(--sp-4); font-size: var(--text-sm);">A Projects-v2 single-select, not labels. Setting it needs the <code>project</code> token scope.</p>
+          <div class="table-wrap">
+            <table class="vocab">
+              <thead><tr><th scope="col">Status</th><th scope="col">Means</th></tr></thead>
+              <tbody>
+                <tr><td><span class="chip">Todo</span></td><td>Seeded on the board, not started.</td></tr>
+                <tr><td><span class="chip chip--label">In Progress</span></td><td>A worker has claimed it and is building.</td></tr>
+                <tr><td><span class="chip chip--danger">Blocked</span></td><td>A human must act before it can move.</td></tr>
+                <tr><td><span class="chip chip--warn">Pending Decision</span></td><td>Awaiting a <code>Decision:</code> answer.</td></tr>
+                <tr><td><span class="chip chip--ok">Done</span></td><td>Merged / item complete; the issue is closed.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="margin-top: var(--sp-7); margin-bottom: var(--sp-4);">Authorization tiers</h3>
+          <p class="text-muted" style="margin-bottom: var(--sp-4); font-size: var(--text-sm);">Every gated action carries one (<code>MISSION.md</code> &sect;9). Most things are <code>auto</code>.</p>
+          <div class="table-wrap">
+            <table class="vocab">
+              <thead><tr><th scope="col">Tier</th><th scope="col">Behavior</th></tr></thead>
+              <tbody>
+                <tr><td><span class="chip chip--ok">auto</span></td><td>Do it now, no gate.</td></tr>
+                <tr><td><span class="chip chip--ok">auto-with-audit</span></td><td>Do it, and record an ADR in <code>DECISIONS.md</code>.</td></tr>
+                <tr><td><span class="chip chip--warn">time-boxed</span></td><td>Propose on the board, keep working elsewhere, auto-proceed after the window if no objection.</td></tr>
+                <tr><td><span class="chip chip--danger">human-required</span></td><td>Do not implement until the cofounder approves.</td></tr>
+                <tr><td><span class="chip chip--danger">never</span></td><td>Refuse: the NEVER list and the harness one-way doors.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="margin-top: var(--sp-7); margin-bottom: var(--sp-4);">Decision directives</h3>
+          <p class="text-muted" style="margin-bottom: var(--sp-4); font-size: var(--text-sm);">The cofounder answers a gate with a comment whose <strong>first line</strong> is one of these.</p>
+          <div class="table-wrap">
+            <table class="vocab">
+              <thead><tr><th scope="col">First line</th><th scope="col">Effect</th></tr></thead>
+              <tbody>
+                <tr><td><span class="chip chip--label">Decision: approved</span></td><td>Approve the proposal as-is.</td></tr>
+                <tr><td><span class="chip chip--label">Decision: option &lt;X&gt;</span></td><td>Pick a listed option.</td></tr>
+                <tr><td><span class="chip chip--label">Decision: changes &mdash; &lt;&hellip;&gt;</span></td><td>Request changes; the agent revises and re-posts.</td></tr>
+                <tr><td><span class="chip chip--label">Decision: hold</span></td><td>Stay paused.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel" style="margin-top: var(--sp-6);">
+            <h3>Agent comment marker</h3>
+            <p>The agent self-signs every issue/PR comment it posts with <code>&lt;!-- agent:autonomous-kickoff --&gt;</code>, and <strong>never</strong> applies <code>decision:*</code> labels. So a self-signed comment is the agent's own (not a directive), and a <code>decision:*</code> label is trusted only when its <code>labeled</code>-event actor is the cofounder.</p>
+          </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="ref-section" id="faq" aria-labelledby="faq-h">
+          <h2 id="faq-h">FAQ</h2>
+          <div class="faq" style="margin-top: var(--sp-5);">
+            <details>
+              <summary>Do I need to keep my laptop or CLI open?</summary>
+              <div class="faq-body">
+                <p>Only for Tier 1. The in-session watchdog fires while your agent CLI session is open and resumes the build if it idles. For machine-off, fully unattended operation, enable <strong>Tier 2</strong>: a scheduled GitHub Actions cron dispatches the Copilot cloud coding agent with Sentinel-in-CI, so no laptop is required.</p>
+              </div>
+            </details>
+            <details>
+              <summary>What exactly is Sentinel?</summary>
+              <div class="faq-body">
+                <p>Sentinel is the independent code-review gate that ships inside <a href="https://github.com/pedrofuentes/agents-template" rel="noopener">agents-template</a>, the harness this runs on. Its rule is <strong>coder&nbsp;&ne;&nbsp;reviewer</strong>: the agent that wrote a change never approves it. Sentinel returns <code>APPROVED</code>, <code>CONDITIONAL</code> (non-correctness, non-security follow-ups only), or <code>REJECTED</code>, and runs both as a dev-time sub-agent and as a required CI check.</p>
+              </div>
+            </details>
+            <details>
+              <summary>How is this different from just prompting an agent to "build my app"?</summary>
+              <div class="faq-body">
+                <p>A one-shot prompt has no review, no memory, and no follow-through. autonomous-kickoff adds the system around the agent: a fleet of specialists, a GitHub Project board as the work queue and heartbeat, artifact-gated phases, test-first development with an independent Sentinel gate on every PR, continuous operation across sessions, and a machine-verified Definition of Done. The agent keeps going until that is met.</p>
+              </div>
+            </details>
+            <details>
+              <summary>What's the relationship to agents-template?</summary>
+              <div class="faq-body">
+                <p><strong>agents-template</strong> is the harness: the quality rules (TDD, worktrees, the Sentinel gate). <strong>autonomous-kickoff</strong> is the mission layer on top that turns a goal into a shipped product. Phase 0 of the kickoff bootstraps the harness, and that bootstrap is isolated to a single paragraph, so swapping to a different harness is a one-section change.</p>
+              </div>
+            </details>
+            <details>
+              <summary>Is it safe to run unattended?</summary>
+              <div class="faq-body">
+                <p>That's the design goal. Unattended runs use a <strong>distinct agent identity</strong> so a decision can't be forged; untrusted input (issues, PRs, comments, web pages, dependencies) is treated as <strong>data, never instructions</strong>; every action is bounded by an <strong>authorization tier</strong>; one-way actions (force-pushing <code>main</code>, weakening branch protection or a scanner, deleting data) are <code>never</code>; merges go through the <strong>Sentinel-in-CI</strong> gate; security scanners run continuously; and a kill switch stops it on demand.</p>
+              </div>
+            </details>
+            <details>
+              <summary>Does it only build web apps?</summary>
+              <div class="faq-body">
+                <p>No, it's product-agnostic. The operating manual assumes no product type, stack, host, or auth; everything specific lives in your <code>MISSION.md</code>. The same prompt builds a web app, a CLI, a library, a service, or a bot. See the <a href="#example">slugify-cli</a> example above.</p>
+              </div>
+            </details>
+            <details>
+              <summary>Which AI model or agent does it need?</summary>
+              <div class="faq-body">
+                <p>It's agent-agnostic: it runs in whatever capable agent runtime you launch it in, and uses the Copilot cloud coding agent for unattended Tier 2. In Phase 0 it probes its own delegation capability (<code>full</code> / <code>flat</code> / <code>none</code>) and degrades gracefully, falling back to Sentinel-in-CI as the enforced reviewer when it can't spawn a live sub-agent.</p>
+              </div>
+            </details>
+            <details>
+              <summary>How do I keep a project up to date with the template?</summary>
+              <div class="faq-body">
+                <p>Paste the <a href="#update">Update</a> prompt between runs, or <a href="#migrate">Migrate</a> mid-build. Both read your <code>docs/VERSION</code>, compare it to the latest, show you the changelog entries between the two, and apply the listed migration steps, leaving your <code>MISSION.md</code> to you. Versioning is SemVer mapped to the prompt contract; releases are tagged <code>vX.Y.Z</code>.</p>
+              </div>
+            </details>
+            <details>
+              <summary>What do I actually have to do as the human?</summary>
+              <div class="faq-body">
+                <p>Fill in <code>MISSION.md</code> (the Set up prompt does most of it with you), provision an agent identity or opt into attended mode, then answer gate decisions when you're @-mentioned. You're the cofounder and the unblock path; the agent does the building.</p>
+              </div>
+            </details>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a class="brand" href="./"><span class="brand-dot" aria-hidden="true"></span> autonomous<span class="brand-mark">-kickoff</span></a>
+          <p class="footer-blurb">The mission layer for fully-autonomous, end-to-end software builds. Give an agent a goal; it ships.</p>
+        </div>
+        <div class="footer-col">
+          <h5>On this site</h5>
+          <ul>
+            <li><a href="index.html#why">Why use it</a></li>
+            <li><a href="index.html#how">How it works</a></li>
+            <li><a href="index.html#sentinel">The Sentinel gate</a></li>
+            <li><a href="reference.html">Prompt library</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Project</h5>
+          <ul>
+            <li><a href="https://github.com/pedrofuentes/autonomous-kickoff" rel="noopener">GitHub repository</a></li>
+            <li><a href="https://github.com/pedrofuentes/agents-template" rel="noopener">agents-template (harness)</a></li>
+            <li><a href="https://github.com/pedrofuentes/autonomous-kickoff/blob/main/CHANGELOG.md" rel="noopener">Changelog</a></li>
+            <li><a href="https://github.com/pedrofuentes/autonomous-kickoff/blob/main/LICENSE" rel="noopener">License (MIT)</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; <span id="year">2026</span> autonomous-kickoff &middot; MIT licensed</span>
+        <span class="version-badge"><span class="dot" aria-hidden="true"></span> template v2.1.0</span>
+      </div>
+    </div>
+  </footer>
+
+  <div id="copy-live" class="visually-hidden" role="status" aria-live="polite"></div>
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

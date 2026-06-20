@@ -1,0 +1,90 @@
+/* ============================================================================
+   autonomous-kickoff — design tokens
+   Dark "launch console / live telemetry" system. OKLCH throughout.
+   See site/DESIGN.md for the rationale. Edit tokens here, not inline.
+   ========================================================================== */
+
+:root {
+  color-scheme: dark;
+
+  /* ---- Surfaces: near-neutral cool instrument-graphite (low chroma) ------ */
+  --bg:           oklch(0.150 0.010 256);
+  --bg-raised:    oklch(0.186 0.012 256);
+  --surface:      oklch(0.216 0.013 256);
+  --surface-hi:   oklch(0.258 0.014 256);
+  --hairline:     oklch(0.330 0.016 256);
+  --hairline-2:   oklch(0.420 0.018 256);
+  --scrim:        oklch(0.10 0.01 256 / 0.66);
+
+  /* ---- Ink: near-white, faint cool. Contrast verified on --bg ------------- */
+  --ink:          oklch(0.967 0.004 256);  /* primary text   ~16:1 on --bg   */
+  --ink-2:        oklch(0.836 0.010 256);  /* secondary      ~9:1 on --bg    */
+  --muted:        oklch(0.715 0.012 256);  /* tertiary/labels ~5.6:1 on --bg */
+
+  /* ---- Signal: ember — THE brand color (use at ~10% weight) --------------- */
+  --signal:       oklch(0.770 0.150 64);
+  --signal-hi:    oklch(0.840 0.140 70);
+  --signal-link:  oklch(0.822 0.128 72);   /* inline links, ≥4.5:1 on dark   */
+  --on-signal:    oklch(0.185 0.030 60);   /* text on an ember fill          */
+  --signal-dim:   oklch(0.770 0.150 64 / 0.14);
+  --signal-glow:  oklch(0.770 0.150 64 / 0.40);
+
+  /* ---- Semantic (always paired with a label/icon) ------------------------ */
+  --ok:           oklch(0.800 0.150 152);
+  --ok-dim:       oklch(0.800 0.150 152 / 0.14);
+  --warn:         oklch(0.858 0.130 96);
+  --warn-dim:     oklch(0.858 0.130 96 / 0.14);
+  --danger:       oklch(0.705 0.176 26);
+  --danger-dim:   oklch(0.705 0.176 26 / 0.15);
+
+  /* ---- Typography -------------------------------------------------------- */
+  --font-display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --font-text:    "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, "SFMono-Regular", "Menlo", monospace;
+
+  --text-xs:   0.82rem;
+  --text-sm:   0.92rem;
+  --text-base: 1.0625rem;
+  --text-lg:   clamp(1.18rem, 1.05rem + 0.55vw, 1.4rem);
+  --text-xl:   clamp(1.5rem, 1.3rem + 1vw, 1.95rem);
+  --text-2xl:  clamp(1.95rem, 1.5rem + 1.9vw, 2.85rem);
+  --text-3xl:  clamp(2.5rem, 1.85rem + 3vw, 3.95rem);
+  --display:   clamp(2.9rem, 2rem + 4.4vw, 5.4rem);
+
+  --lh-tight:  1.08;
+  --lh-snug:   1.22;
+  --lh-body:   1.62;
+
+  --tracking-display: -0.025em;
+  --tracking-tight:   -0.012em;
+  --tracking-label:   0.14em;
+
+  /* ---- Spacing (4pt base) ------------------------------------------------ */
+  --sp-1: 0.25rem;  --sp-2: 0.5rem;   --sp-3: 0.75rem;  --sp-4: 1rem;
+  --sp-5: 1.5rem;   --sp-6: 2rem;     --sp-7: 3rem;     --sp-8: 4rem;
+  --sp-9: 6rem;     --sp-10: 8rem;
+  --section-y: clamp(4rem, 4rem + 5vh, 8rem);
+
+  /* ---- Sizing ------------------------------------------------------------ */
+  --container: 72rem;
+  --prose: 42rem;
+  --gutter: clamp(1.25rem, 0.5rem + 3vw, 2.5rem);
+
+  /* ---- Shape ------------------------------------------------------------- */
+  --r-sm: 6px;  --r: 10px;  --r-lg: 16px;  --r-xl: 22px;  --r-pill: 999px;
+
+  /* ---- Elevation (subtle; dark depth comes mostly from surface lightness) */
+  --shadow-1: 0 1px 2px oklch(0.08 0.01 256 / 0.5);
+  --shadow-2: 0 8px 24px -12px oklch(0.06 0.01 256 / 0.7);
+  --shadow-3: 0 24px 60px -24px oklch(0.04 0.01 256 / 0.8);
+  --glow:     0 0 0 1px var(--signal-glow), 0 0 28px -6px var(--signal-glow);
+
+  /* ---- Motion ------------------------------------------------------------ */
+  --dur-1: 140ms;  --dur-2: 240ms;  --dur-3: 440ms;  --dur-4: 700ms;
+  --ease-out:   cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---- z-index scale ----------------------------------------------------- */
+  --z-base: 1;  --z-dropdown: 1000;  --z-sticky: 1100;  --z-backdrop: 1200;
+  --z-modal: 1300;  --z-toast: 1400;  --z-tooltip: 1500;
+}

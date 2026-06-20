@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>autonomous-kickoff &mdash; give an agent a goal; it ships the product</title>
+  <meta name="description" content="A product-agnostic kickoff for fully-autonomous, end-to-end software builds. Give an AI agent a goal and a one-page brief; it researches, plans, builds test-first in isolated worktrees, reviews every change through the Sentinel gate, ships, and doesn't stop until it's done.">
+  <link rel="canonical" href="https://pedrofuent.es/autonomous-kickoff/">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="autonomous-kickoff">
+  <meta property="og:description" content="Give an AI agent a goal and a one-page brief. It researches, plans, builds (TDD + worktrees), reviews via Sentinel, ships &mdash; and doesn't stop until it's done.">
+  <meta property="og:url" content="https://pedrofuent.es/autonomous-kickoff/">
+  <meta property="og:image" content="https://pedrofuent.es/autonomous-kickoff/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <script>
+    /* Hide reveal elements ONLY when JS can reliably animate them in.
+       No-JS / reduced-motion / crawlers never get the hidden state. */
+    (function () {
+      try {
+        if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        if (!("IntersectionObserver" in window)) return;
+        document.documentElement.classList.add("js-anim");
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" data-nav-open="false">
+    <div class="container nav">
+      <a class="brand" href="./" aria-label="autonomous-kickoff home">
+        <span class="brand-dot" aria-hidden="true"></span>
+        autonomous<span class="brand-mark">-kickoff</span>
+      </a>
+      <nav class="nav-links" id="primary-nav" aria-label="Primary">
+        <a href="#why">Why</a>
+        <a href="#how">How it works</a>
+        <a href="#sentinel">Sentinel</a>
+        <a href="#always">Always-on</a>
+        <a href="reference.html">Reference</a>
+      </nav>
+      <div class="nav-right">
+        <a class="icon-link" href="https://github.com/pedrofuentes/autonomous-kickoff" aria-label="View on GitHub" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.5v-1.7c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 5 18.3 5.3 18.3 5.3c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.6.8.5 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"/></svg>
+        </a>
+        <a class="btn btn-primary btn-sm nav-desktop-cta" href="reference.html">Get the prompts</a>
+        <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-nav">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <span class="eyebrow"><span class="brand-dot" aria-hidden="true"></span> The mission layer for autonomous builds</span>
+          <h1>Give an agent a goal.<br>It <span class="accent">ships the product.</span></h1>
+          <p class="lead">One product-agnostic prompt reads a one-page brief, then researches, plans, builds test-first in isolated worktrees, reviews every change through Sentinel, ships &mdash; and doesn't stop until it's done.</p>
+          <div class="hero-cta cluster">
+            <a class="btn btn-primary" href="reference.html">Get the prompts</a>
+            <a class="btn btn-ghost" href="#how">See how it works</a>
+          </div>
+          <div class="hero-meta">
+            <span>Pairs with <b>agents-template</b></span>
+            <span>Coder&nbsp;≠&nbsp;reviewer via <b>Sentinel</b></span>
+            <span>Runs <b>continuously</b></span>
+          </div>
+        </div>
+
+        <figure class="loop-figure reveal" aria-hidden="false">
+          <svg viewBox="0 0 480 470" role="img" aria-labelledby="loop-title loop-desc">
+            <title id="loop-title">The autonomous build loop</title>
+            <desc id="loop-desc">A goal and MISSION.md feed a sub-agent fleet that builds test-first in worktrees; every change passes the Sentinel review gate before it is merged and shipped, then the loop repeats &mdash; driven continuously by the board heartbeat at the center.</desc>
+
+            <circle class="loop-orbit" cx="240" cy="235" r="170"/>
+            <circle class="loop-comet" cx="240" cy="235" r="170" pathLength="100"/>
+
+            <!-- center: board = heartbeat -->
+            <g>
+              <circle class="core-ring" cx="240" cy="235" r="40"/>
+              <circle class="core-pulse" cx="240" cy="235" r="40"/>
+              <path d="M218 235 h10 l5 -12 l8 24 l5 -12 h10" fill="none" stroke="var(--signal)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <text class="core-text" x="240" y="298">BOARD = HEARTBEAT</text>
+            </g>
+
+            <!-- N: brief -->
+            <g>
+              <rect class="node-box" x="174" y="40" width="132" height="52" rx="10"/>
+              <text class="node-label" x="240" y="62" text-anchor="middle">Goal + MISSION.md</text>
+              <text class="node-sub" x="240" y="78" text-anchor="middle">the one-page brief</text>
+            </g>
+
+            <!-- E: fleet -->
+            <g>
+              <rect class="node-box" x="344" y="209" width="132" height="52" rx="10"/>
+              <text class="node-label" x="410" y="231" text-anchor="middle">Sub-agent fleet</text>
+              <text class="node-sub" x="410" y="247" text-anchor="middle">TDD &middot; worktrees</text>
+            </g>
+
+            <!-- S: sentinel -->
+            <g>
+              <rect class="node-box is-gate" x="174" y="378" width="132" height="52" rx="10"/>
+              <text class="node-label" x="240" y="400" text-anchor="middle">Sentinel gate</text>
+              <text class="node-sub" x="240" y="416" text-anchor="middle">coder &ne; reviewer</text>
+            </g>
+
+            <!-- W: ship -->
+            <g>
+              <rect class="node-box" x="4" y="209" width="132" height="52" rx="10"/>
+              <text class="node-label" x="70" y="231" text-anchor="middle">Merge + ship</text>
+              <text class="node-sub" x="70" y="247" text-anchor="middle">main stays green</text>
+            </g>
+          </svg>
+          <figcaption>research &rarr; build &rarr; review &rarr; ship &rarr; repeat</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- WHY -->
+    <section class="section" id="why">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Why</span>
+          <h2>One-shot prompting stalls. A mission layer ships.</h2>
+          <p class="lead">"Build me an app" gets you a promising start and a dead end: no tests, no review, no memory, no follow-through. autonomous-kickoff replaces the one-shot with a system &mdash; one generic prompt plus one short, per-project brief.</p>
+        </div>
+
+        <div class="why-grid">
+          <div class="why-col why-col--old panel reveal">
+            <h3><span class="why-tag why-tag--old">one-shot</span> The lone prompt</h3>
+            <ul class="why-list">
+              <li>Generates code, then forgets why.</li>
+              <li>No independent review &mdash; the author grades their own work.</li>
+              <li>Stops at the first hard part, or hallucinates past it.</li>
+              <li>You babysit every step and re-explain context each session.</li>
+            </ul>
+          </div>
+          <div class="why-col why-col--new panel reveal">
+            <h3><span class="why-tag why-tag--new">mission layer</span> autonomous-kickoff</h3>
+            <ul class="why-list">
+              <li>A fleet of specialists: research, PM, UX, architecture, engineering, QA.</li>
+              <li>Every change merges only on an independent <strong>Sentinel</strong> verdict.</li>
+              <li>A GitHub Project board is the work queue &mdash; and the heartbeat that keeps it going.</li>
+              <li>You stay the cofounder: approve gates, unblock, steer. It does the rest.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel reveal" style="margin-top: var(--sp-6);">
+          <p style="color: var(--ink-2);"><strong>The trick to reuse:</strong> one generic prompt, one short brief. <code class="mono">docs/KICKOFF.md</code> is the product-neutral operating manual &mdash; identical across every project. <code class="mono">MISSION.md</code> is the only file you fill in: mission, users, stack, MVP, security, Definition&nbsp;of&nbsp;Done, and what's pre-authorized versus gated. The prompt reads the brief; if a field is blank, it asks you once, then runs.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW -->
+    <section class="section" id="how">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">How it works</span>
+          <h2>A phased build, gated by artifacts, run by a fleet.</h2>
+          <p class="lead">The build runs as a sequence of phases. Each ends in an artifact gate &mdash; a named deliverable produced by the right specialist and independently red-teamed before the next phase starts.</p>
+        </div>
+
+        <div class="pipeline reveal-stagger">
+          <div class="phase">
+            <span class="phase-num">PHASE 0</span>
+            <h4>Bootstrap</h4>
+            <p>Wire up agents-template + Sentinel, probe delegation, verify identity.</p>
+            <span class="phase-gate">gate &middot; <b>harness ready</b></span>
+          </div>
+          <div class="phase">
+            <span class="phase-num">PHASE 1</span>
+            <h4>Discovery</h4>
+            <p>Research with citations &rarr; a PRD and a prioritized roadmap.</p>
+            <span class="phase-gate">gate &middot; <b>PRD.md</b></span>
+          </div>
+          <div class="phase">
+            <span class="phase-num">PHASE 2</span>
+            <h4>UX &amp; design</h4>
+            <p>User journeys, states, and tokens &mdash; when the product has a UI.</p>
+            <span class="phase-gate">gate &middot; <b>USER_FLOWS.md</b></span>
+          </div>
+          <div class="phase">
+            <span class="phase-num">PHASE 3</span>
+            <h4>Architecture</h4>
+            <p>ADRs, data model, and the deploy approach, red-teamed.</p>
+            <span class="phase-gate">gate &middot; <b>ARCHITECTURE.md</b></span>
+          </div>
+          <div class="phase">
+            <span class="phase-num">PHASE 4&ndash;N</span>
+            <h4>Build</h4>
+            <p>One PR per increment: failing test &rarr; implement &rarr; Sentinel &rarr; merge.</p>
+            <span class="phase-gate">gate &middot; <b>Sentinel PRs</b></span>
+          </div>
+          <div class="phase">
+            <span class="phase-num">FINAL</span>
+            <h4>Ship</h4>
+            <p>Deploy or publish for real, verify against reality, polish.</p>
+            <span class="phase-gate">gate &middot; <b>live artifact</b></span>
+          </div>
+        </div>
+
+        <div class="grid-auto reveal-stagger" style="margin-top: var(--sp-6);">
+          <div class="panel">
+            <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v6m0 0 3-2m-3 2L9 7M5 13a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4M7 21h10"/></svg></div>
+            <h3>A shallow org, not a monolith</h3>
+            <p>A Delivery Lead coordinates guilds and workers &mdash; capped at three levels. Substantial work is delegated; the Lead never silently collapses into a solo generalist.</p>
+          </div>
+          <div class="panel">
+            <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3v12m12-6v12M6 15a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm12 0a3 3 0 1 0 0 6 3 3 0 0 0 0-6ZM6 9a3 3 0 0 0 6 0 6 6 0 0 1 6-6"/></svg></div>
+            <h3>Isolated worktrees, one PR each</h3>
+            <p>Every increment is test-first in its own git worktree. Independent features run in parallel, then serialize their merges through review &mdash; never on <code class="mono">main</code>.</p>
+          </div>
+          <div class="panel">
+            <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg></div>
+            <h3>Evidence, not claims</h3>
+            <p>Each PR carries a red&rarr;green transcript, the acceptance-test IDs it satisfies, and a green CI run. A PR that merely asserts it works is rejected.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SENTINEL -->
+    <section class="section" id="sentinel">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">The Sentinel connection</span>
+          <h2>An independent gate stands between every change and <code class="mono">main</code>.</h2>
+          <p class="lead">Sentinel is the review discipline that ships inside agents-template &mdash; the harness autonomous-kickoff runs on. The rule is absolute: <strong>coder&nbsp;&ne;&nbsp;reviewer</strong>. The agent that wrote the code never approves it.</p>
+        </div>
+
+        <div class="verdicts reveal-stagger">
+          <div class="verdict verdict--ok">
+            <span class="verdict-badge">APPROVED</span>
+            <p>The change is correct, tested, and in scope. The Lead completes the Pre-Merge Checklist and merges &mdash; then confirms <code class="mono">main</code> stays green.</p>
+          </div>
+          <div class="verdict verdict--cond">
+            <span class="verdict-badge">CONDITIONAL</span>
+            <p>Mergeable with tracked follow-ups &mdash; <strong>only</strong> for non-correctness, non-security nits, each filed as an issue and resolved before the milestone signs off.</p>
+          </div>
+          <div class="verdict verdict--rej">
+            <span class="verdict-badge">REJECTED</span>
+            <p>A correctness or security gap is a blocker &mdash; never conditional. The engineer fixes it and re-submits. Nothing merges on a rejection.</p>
+          </div>
+        </div>
+
+        <div class="panel reveal" style="margin-top: var(--sp-6);">
+          <h3>How an agent merges its own work without grading it</h3>
+          <p>Branch protection makes <strong>Sentinel-in-CI a required status check</strong> with <code class="mono">required_approving_review_count: 0</code>. A fresh CI run never authored the diff, so it satisfies coder&nbsp;&ne;&nbsp;reviewer at the process level &mdash; the agent can merge unattended when checks pass, with no human approval bottleneck and no way to approve its own PR. Changes that touch Sentinel, CI, branch protection, or scanner config are <code class="mono">human-required</code> and can't auto-merge on a check they could weaken.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ALWAYS-ON -->
+    <section class="section" id="always">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Always working</span>
+          <h2>It doesn't idle &mdash; it runs in tiers.</h2>
+          <p class="lead">The board is the heartbeat: after each merged increment, the agent pulls the next ready card and keeps going. Three tiers decide how far that runs without you.</p>
+        </div>
+
+        <div class="tier-cards reveal-stagger">
+          <div class="tier-card" data-tier="0">
+            <span class="tier-kicker">FOUNDATION</span>
+            <h3>The board is the heartbeat</h3>
+            <p>The GitHub Project board is the work queue and the system of record. An atomic issue-claim protocol stops two workers from grabbing the same card.</p>
+          </div>
+          <div class="tier-card" data-tier="1">
+            <span class="tier-kicker">TIER 1</span>
+            <h3>In-session watchdog</h3>
+            <p>A recurring schedule resumes the agent if it idles &mdash; while your CLI session is open. Re-arm it after a pause, crash, or update.</p>
+          </div>
+          <div class="tier-card" data-tier="2">
+            <span class="tier-kicker">TIER 2</span>
+            <h3>Durable 24/7, machine-off</h3>
+            <p>A scheduled GitHub Actions cron dispatches the Copilot cloud coding agent with Sentinel-in-CI &mdash; fully unattended, no laptop required.</p>
+          </div>
+        </div>
+
+        <div class="panel reveal" style="margin-top: var(--sp-6);">
+          <p style="color: var(--ink-2);"><strong>It stops on purpose, not by accident.</strong> Builds run milestone by milestone: at each Definition of Done the agent proposes the next roadmap milestone via a decision gate and resumes on your approval &mdash; or a time-box. It watches security continuously (Dependabot, code scanning, secret scanning), gating releases on open high/critical alerts. A kill switch stops it on demand. The only clean full stop is project completion.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUST -->
+    <section class="section" id="trust">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Trust &amp; control</span>
+          <h2>Built to run unattended &mdash; safely.</h2>
+          <p class="lead">Autonomy without guardrails is a liability. The contract that makes the output trustworthy is load-bearing, and it wins over any later instruction.</p>
+        </div>
+
+        <div class="guards reveal-stagger">
+          <div class="guard">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+            <div><h4>A distinct agent identity</h4><p>Unattended runs act under the agent's own identity &mdash; a GitHub App, machine-user, or the Copilot agent &mdash; so a decision can't be forged. A Phase-0 self-check fails closed if it isn't.</p></div>
+          </div>
+          <div class="guard">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h10"/><path d="M18 17l2 2 3-3"/></svg>
+            <div><h4>Untrusted input is data</h4><p>Issues, PRs, comments, web pages, and dependency code are data &mdash; never instructions. Only the brief, the kickoff docs, and the verified cofounder can change scope or gates.</p></div>
+          </div>
+          <div class="guard">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v4m0 12v4m10-10h-4M6 12H2m15.5-6.5-2.8 2.8M9.3 14.7l-2.8 2.8m11 0-2.8-2.8M9.3 9.3 6.5 6.5"/></svg>
+            <div><h4>Authorize by tier</h4><p>Every action carries a tier &mdash; <code class="mono">auto</code>, <code class="mono">auto-with-audit</code>, <code class="mono">time-boxed</code>, <code class="mono">human-required</code>, <code class="mono">never</code>. The agent acts within it and asks only when it must.</p></div>
+          </div>
+          <div class="guard">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V7a6 6 0 0 1 12 0v2"/><rect x="4" y="9" width="16" height="11" rx="2"/><path d="M12 13v3"/></svg>
+            <div><h4>One-way guardrails</h4><p>Force-pushing <code class="mono">main</code>, relaxing branch protection or the Sentinel gate, deleting data, or weakening a scanner are <code class="mono">never</code>. Secrets never enter the repo.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCT-AGNOSTIC -->
+    <section class="section section--tight" id="product">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Product-agnostic</span>
+          <h2>Same prompt, any shape of product.</h2>
+          <p class="lead">The operating manual assumes no product type, stack, host, or auth. Everything project-specific lives in the brief &mdash; so the same flow builds a web app, a CLI, a library, a service, or a bot.</p>
+        </div>
+        <div class="surfaces reveal">
+          <span class="surface-chip"><b>web</b> app</span>
+          <span class="surface-chip"><b>CLI</b> &middot; npm</span>
+          <span class="surface-chip"><b>library</b></span>
+          <span class="surface-chip"><b>service</b> / API</span>
+          <span class="surface-chip"><b>bot</b></span>
+        </div>
+        <p class="reveal" style="margin-top: var(--sp-5); color: var(--muted); font-size: var(--text-sm);">See the worked <code class="mono">slugify-cli</code> brief and the full prompt library on the <a href="reference.html#example">Reference</a> page.</p>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section cta-band" id="start">
+      <div class="container">
+        <div class="panel reveal">
+          <h2>Two prompts to begin.</h2>
+          <p class="lead">Paste <strong>Set&nbsp;up</strong> into an agent session in your repo, confirm the brief, then paste <strong>Launch</strong>. The agent bootstraps the harness and starts building.</p>
+          <div class="cluster">
+            <a class="btn btn-primary" href="reference.html">Open the prompt library</a>
+            <a class="btn btn-ghost" href="https://github.com/pedrofuentes/autonomous-kickoff" rel="noopener">View on GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a class="brand" href="./"><span class="brand-dot" aria-hidden="true"></span> autonomous<span class="brand-mark">-kickoff</span></a>
+          <p class="footer-blurb">The mission layer for fully-autonomous, end-to-end software builds. Give an agent a goal; it ships.</p>
+        </div>
+        <div class="footer-col">
+          <h5>On this site</h5>
+          <ul>
+            <li><a href="#why">Why use it</a></li>
+            <li><a href="#how">How it works</a></li>
+            <li><a href="#sentinel">The Sentinel gate</a></li>
+            <li><a href="reference.html">Prompt library</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Project</h5>
+          <ul>
+            <li><a href="https://github.com/pedrofuentes/autonomous-kickoff" rel="noopener">GitHub repository</a></li>
+            <li><a href="https://github.com/pedrofuentes/agents-template" rel="noopener">agents-template (harness)</a></li>
+            <li><a href="https://github.com/pedrofuentes/autonomous-kickoff/blob/main/CHANGELOG.md" rel="noopener">Changelog</a></li>
+            <li><a href="https://github.com/pedrofuentes/autonomous-kickoff/blob/main/LICENSE" rel="noopener">License (MIT)</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; <span id="year">2026</span> autonomous-kickoff &middot; MIT licensed</span>
+        <span class="version-badge"><span class="dot" aria-hidden="true"></span> template v2.1.0</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

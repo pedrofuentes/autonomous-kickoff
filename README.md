@@ -33,7 +33,7 @@ examples/
 
 ## Quick start
 
-You don't copy files by hand — like `agents-template`, you hand the agent a prompt and it sets itself up. Two steps: **set up**, then **launch**.
+You don't copy files by hand — like `agents-template`, you hand the agent a prompt and it sets itself up. Two steps: **set up**, then **launch** — every other prompt (update, continue, status, pause/resume) is in [the prompt library](#the-prompt-library) below.
 
 ### 1. Set up — paste into an agent session in your project repo
 
@@ -45,6 +45,19 @@ You don't copy files by hand — like `agents-template`, you hand the agent a pr
 
 The agent then bootstraps `agents-template`, researches, plans, builds (TDD + Sentinel), and ships. **Prefer a single paste?** Use the Set-up prompt and append: *"…then, once I confirm `MISSION.md`, immediately read `docs/KICKOFF.md` and begin Phase 0."*
 
+## The prompt library
+
+Every prompt you'll paste, in one place. **Set up** and **Launch** (above) are all you need to begin; the rest keep the template current and the run under your control. Each block is copy-safe — paste it verbatim into the agent session.
+
+| Prompt | When to use |
+|--------|-------------|
+| **Set up** · **Launch** | *(Quick start, above)* — pull the template + fill `MISSION.md`, then begin the build |
+| **Update** | adopt a newer template version **between sessions** |
+| **Migrate** | adopt a newer template version **mid-run** (already building) |
+| **Continue** | the agent finished a milestone/round, or you stopped it — push to the next round |
+| **Status** | a **read-only** "where are we?" check-in |
+| **Pause / Resume** | stop the autonomous loop, or re-arm it after a pause/crash/closed CLI |
+
 ### Update an existing project to the latest template
 
 > **Fetch the latest autonomous-kickoff template from https://github.com/pedrofuentes/autonomous-kickoff — read its `template/docs/VERSION` and compare to my `docs/VERSION`. If I'm behind, show me the `CHANGELOG.md` entries between the two versions, then update `docs/KICKOFF.md`, `docs/ORCHESTRATION.md`, `docs/CONTINUOUS-OPERATION.md` and `docs/VERSION` from `template/docs/*` (they're generic — nothing project-specific to preserve) and run any Migration steps the changelog lists for those versions. Leave my `MISSION.md` untouched — but if a Migration step requires a `MISSION.md` change (a new section, or the §9 schema change in a MAJOR bump), **don't edit it; hand me a checklist of those manual follow-ups** and flag that the updated docs may reference brief sections/knobs I haven't added yet. Show me a diff summary before applying, then re-arm the continuous-operation watchdog (see `CONTINUOUS-OPERATION.md`) so work resumes.**
@@ -54,6 +67,26 @@ The agent then bootstraps `agents-template`, researches, plans, builds (TDD + Se
 Use this when an agent is **already building** and you want it to adopt a newer template version without disrupting the run (the Update prompt above is for a repo between sessions). Paste into the running agent's session:
 
 > **Migrate this project to the latest autonomous-kickoff template, safely and mid-run. (1) First read and record my current `docs/VERSION` (if it's absent, treat my version as pre-1.0 / unversioned). (2) Fetch https://github.com/pedrofuentes/autonomous-kickoff and overwrite `docs/KICKOFF.md`, `docs/ORCHESTRATION.md`, `docs/CONTINUOUS-OPERATION.md` and `docs/VERSION` from its `template/docs/*`; leave `MISSION.md` untouched. (3) Read `CHANGELOG.md` and follow the Migration steps from my recorded old version up to the new one — apply them additively, without disrupting in-flight work: keep all current cards, worktrees, and the open increment as they are; create any missing board Status options and labels; adopt the new comment/identity and decision rules; and apply new phase gates only to work not yet started. Any Migration step that needs a `MISSION.md` edit (a new section, or the §9 tier-matrix schema in a MAJOR bump) — **don't touch `MISSION.md`; hand me a checklist of those manual follow-ups** and flag that the new docs reference brief sections/knobs I must add for them to fully resolve. (4) Re-read the three docs, record the new `docs/VERSION` in `PLAN.md`, **re-arm the watchdog**, then continue the build from where you left off — do this at the next safe point (after the current PR is opened) and report a one-line summary of what changed.**
+
+### Continue — resume or start the next round
+
+In v2 the agent doesn't idle at a milestone — it proposes the next one and continues on your approval or the §9 time-box. Paste this to **kick a new round by hand**: after the project fully stopped, after you closed the CLI, or to inject a new direction.
+
+> **Continue the autonomous build. Re-read `docs/KICKOFF.md` and `MISSION.md`, check the GitHub Project board, and if the watchdog isn't armed, re-arm it (see *Starting & restarting the heartbeat* in `CONTINUOUS-OPERATION.md`). If the current milestone still has `ready` or in-progress work, resume it. If a milestone just shipped (board empty, Definition of Done met), propose the next `ROADMAP.md` milestone as a `DECISION:` issue, @-mention me, and continue on my approval or the §9 time-box. If I've added a new direction in `ROADMAP.md`/`MISSION.md`, use that. Don't stop while ready work remains.**
+
+### Status — a read-only check-in
+
+> **Status check — read-only, change nothing (no commits, no board edits, no gates). Give me a one-screen summary: the current milestone and its Definition-of-Done progress; board counts (Todo / In Progress / Blocked / Pending Decision / Done) and any cards waiting on me (`needs:decision` / `blocked`); open high/critical security alerts or detected secrets; what's in flight (worktrees / open PRs / latest Sentinel verdicts); the template version from `docs/VERSION`; and the single next action you'll take.**
+
+### Pause / Resume — stop or re-arm the heartbeat
+
+**Pause** — stop the loop on demand:
+
+> **Pause the autonomous build. List active schedules and stop the watchdog (`manage_schedule action=stop id=<id>`); if Tier-2 is enabled, disable the `agent-tick` workflow (Actions tab → Disable). Record where you are in `PLAN.md`, leave open PRs, worktrees, and the board as-is, start no new work, and tell me exactly how to resume.**
+
+**Resume** — pick up after a pause, crash, or closed CLI:
+
+> **Resume the autonomous build. Re-read `docs/KICKOFF.md` and `MISSION.md`, restore any `ready` labels you froze, re-arm the Tier-1 watchdog (`manage_schedule action=create interval=20m prompt=<the watchdog prompt in CONTINUOUS-OPERATION.md>`) and confirm it's listed (`manage_schedule action=list`); re-enable the `agent-tick` workflow if you use Tier-2; then continue from the board.**
 
 ### Manual fallback (no fetch)
 
@@ -120,9 +153,7 @@ From there the agent: bootstraps `agents-template` → researches CLI ergonomics
 
 Builds run **milestone by milestone**: at each milestone's Definition of Done the agent proposes the next `ROADMAP.md` milestone via a Decision gate and resumes on your approval — so "the next round" is just you answering that gate (from anywhere). It also **continuously watches security** (Dependabot / code scanning / secret scanning), filing alerts as board issues and gating releases on high/critical vulnerabilities and any detected secret. It stops for good only when you declare the project complete or the roadmap is empty.
 
-**Start the next round manually** (e.g., to resume a stopped run or inject a new direction):
-
-> **A milestone shipped — start the next round: read `ROADMAP.md` and `MISSION.md`, propose the next milestone's scope as a `DECISION:` issue and @-mention me; on my approval, re-seed the board from that milestone and continue. If I've added a new direction to `ROADMAP.md`/`MISSION.md`, use that.**
+**Need to nudge it by hand** — resume a stopped run or inject a new direction? Paste the **Continue** prompt from [the prompt library](#the-prompt-library) above. To stop or re-arm on demand, use **Pause / Resume**; for a quick read-only check-in, use **Status**.
 
 ## Relationship to agents-template
 

@@ -14,7 +14,7 @@ cp /tmp/ak/template/MISSION.md ./MISSION.md && cp -r /tmp/ak/template/docs ./doc
 ```
 (Place alongside the `agents-template` files; `KICKOFF.md` Phase 0 bootstraps the harness.)
 
-**Staying current.** The template is versioned (SemVer; see `CHANGELOG.md`), and your repo carries `docs/VERSION`. To upgrade later, paste the README **Update** prompt (between runs) or **Migrate a running project** prompt (mid-build) — both compare your `docs/VERSION` to the latest and apply the changelog's migration steps.
+**Staying current.** The template is versioned (SemVer; see `CHANGELOG.md`), and your repo carries `docs/VERSION`. To upgrade later, paste the README **Update** prompt (between runs) or **Migrate a running project** prompt (mid-build) — both compare your `docs/VERSION` to the latest and apply the changelog's migration steps. These, plus **Continue**, **Status**, and **Pause / Resume**, all live in the README's [prompt library](https://github.com/pedrofuentes/autonomous-kickoff#the-prompt-library).
 
 ## 2. Fill in `MISSION.md` (the setup prompt gathers most of this)
 The setup prompt auto-fills what it can infer and asks you for the rest — this is the reference list. Replace every `{{...}}`. Use `examples/github-dashboard-MISSION.md` as a worked example. Checklist:
@@ -43,4 +43,4 @@ Per `CONTINUOUS-OPERATION.md` Tier 2: enable the Copilot coding agent, GitHub Ac
 Open a fresh agent session in the repo and paste the launch pointer from the README (or the `BEGIN…END` block in `docs/KICKOFF.md`). Watch the GitHub Project board; respond fast when @-mentioned on a gate. **Keep it running:** the **Tier-1** watchdog runs only while this CLI session is open; for **machine-off, unattended** operation enable **Tier 2** (§4). To restart the heartbeat after closing the CLI, a crash, the kill switch, or an update, see *Starting & restarting the heartbeat* in `CONTINUOUS-OPERATION.md`.
 
 ## 6. Pause/stop
-See the **Kill switch** section of `CONTINUOUS-OPERATION.md`.
+Paste the README **Pause** prompt (or use the **Kill switch** section of `CONTINUOUS-OPERATION.md`) to stop on demand; **Resume** re-arms it. To check progress without changing anything, paste **Status**. To push to the next milestone or restart a stopped run, paste **Continue**. All are in the README [prompt library](https://github.com/pedrofuentes/autonomous-kickoff#the-prompt-library).

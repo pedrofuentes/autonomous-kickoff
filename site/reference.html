@@ -396,6 +396,12 @@ cp /tmp/ak/template/MISSION.md ./MISSION.md &amp;&amp; cp -r /tmp/ak/template/do
               </div>
             </details>
             <details>
+              <summary>Does it actually delegate, or does the Lead just do everything itself?</summary>
+              <div class="faq-body">
+                <p>It delegates by construction. Every gate artifact &mdash; research, the PRD, UX, architecture, and the test/QA suites &mdash; is <strong>authored by a specialist sub-agent, never the Lead</strong> (<code>producer&nbsp;&ne;&nbsp;Lead</code>), and a different sub-agent red-teams it. A per-gate self-check records both before the gate passes, and the watchdog audits the delegation ledger and flags a <em>Lead-solo collapse</em> if the Lead authored its own work &mdash; so implementation is never the only phase that gets delegated.</p>
+              </div>
+            </details>
+            <details>
               <summary>What's the relationship to agents-template?</summary>
               <div class="faq-body">
                 <p><strong>agents-template</strong> is the harness: the quality rules (TDD, worktrees, the Sentinel gate). <strong>autonomous-kickoff</strong> is the mission layer on top that turns a goal into a shipped product. Phase 0 of the kickoff bootstraps the harness, and that bootstrap is isolated to a single paragraph, so swapping to a different harness is a one-section change.</p>
@@ -429,6 +435,12 @@ cp /tmp/ak/template/MISSION.md ./MISSION.md &amp;&amp; cp -r /tmp/ak/template/do
               <summary>What do I actually have to do as the human?</summary>
               <div class="faq-body">
                 <p>Fill in <code>MISSION.md</code> (the Set up prompt does most of it with you), provision an agent identity or opt into attended mode, then answer gate decisions when you're @-mentioned. You're the cofounder and the unblock path; the agent does the building.</p>
+              </div>
+            </details>
+            <details>
+              <summary>How do I steer it toward a new idea or goal?</summary>
+              <div class="faq-body">
+                <p>Just talk to it. Float an idea in a live session &mdash; at a milestone boundary or mid-build &mdash; and the agent treats it as a first-class trigger: it shapes the idea with you, confirms it, records it to your <code>ROADMAP.md</code> / <code>MISSION.md</code>, and continues, with no special prompt to paste. Casual musing is shaped and confirmed before it becomes committed scope, and a mid-build idea is queued so it never derails the active milestone. When no live session is open to catch the idea, the <a href="#continue">Continue</a> prompt is the fallback.</p>
               </div>
             </details>
           </div>

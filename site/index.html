@@ -173,7 +173,7 @@
         <div class="section-head reveal">
           <span class="eyebrow">How it works</span>
           <h2>A phased build, gated by artifacts, run by a fleet.</h2>
-          <p class="lead">The build runs as a sequence of phases. Each ends in an artifact gate &mdash; a named deliverable produced by the right specialist and independently red-teamed before the next phase starts.</p>
+          <p class="lead">The build runs as a sequence of phases. Each ends in an artifact gate &mdash; a named deliverable <strong>authored by the right specialist sub-agent, not the Lead</strong>, and independently red-teamed before the next phase starts. A per-gate self-check and a watchdog audit keep the Lead from quietly doing it all itself.</p>
         </div>
 
         <div class="pipeline reveal-stagger">
@@ -219,7 +219,7 @@
           <div class="panel">
             <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v6m0 0 3-2m-3 2L9 7M5 13a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4M7 21h10"/></svg></div>
             <h3>A shallow org, not a monolith</h3>
-            <p>A Delivery Lead coordinates guilds and workers &mdash; capped at three levels. Substantial work is delegated, and the Lead never authors a gate artifact (the PRD, user flows, architecture) &mdash; it coordinates and reviews, never collapses into a solo generalist.</p>
+            <p>A Delivery Lead coordinates guilds and workers &mdash; capped at three levels. Every discipline is delegated &mdash; research, the PRD, UX, architecture, and testing &mdash; and the Lead <strong>never authors a gate artifact</strong> (<code class="mono">producer &ne; Lead</code>): it coordinates and reviews. A per-gate self-check and the watchdog's delegation audit catch any Lead-solo collapse, so implementation is never the only thing that gets delegated.</p>
           </div>
           <div class="panel">
             <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3v12m12-6v12M6 15a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm12 0a3 3 0 1 0 0 6 3 3 0 0 0 0-6ZM6 9a3 3 0 0 0 6 0 6 6 0 0 1 6-6"/></svg></div>
@@ -294,7 +294,11 @@
         </div>
 
         <div class="panel reveal" style="margin-top: var(--sp-6);">
-          <p style="color: var(--ink-2);"><strong>It stops on purpose, not by accident.</strong> Builds run milestone by milestone: at each Definition of Done the agent proposes the next roadmap milestone via a decision gate and resumes on your approval &mdash; or a time-box &mdash; and if you float a new idea in a live session, it shapes the idea with you and adopts it as the next goal automatically. It watches security continuously (Dependabot, code scanning, secret scanning), gating releases on open high/critical alerts. A kill switch stops it on demand. The only clean full stop is project completion.</p>
+          <p style="color: var(--ink-2);"><strong>It stops on purpose, not by accident.</strong> Builds run milestone by milestone: at each Definition of Done the agent proposes the next roadmap milestone via a decision gate and resumes on your approval &mdash; or a time-box. It watches security continuously (Dependabot, code scanning, secret scanning), gating releases on open high/critical alerts. A kill switch stops it on demand. The only clean full stop is project completion.</p>
+        </div>
+
+        <div class="panel reveal" style="margin-top: var(--sp-4);">
+          <p style="color: var(--ink-2);"><strong>Steer it by talking &mdash; float an idea, it becomes the goal.</strong> Mention a new direction in a live session &mdash; at a milestone boundary or mid-build &mdash; and the agent treats it as a first-class trigger: it shapes the idea with you, confirms it, records it to your roadmap, and keeps building, with no special prompt to paste. Casual musing is shaped and confirmed before it becomes committed scope; mid-build, a confirmed idea is queued so it never derails the active milestone.</p>
         </div>
       </div>
     </section>

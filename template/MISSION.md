@@ -18,12 +18,14 @@
 - **Product type:** {{e.g., static web SPA · CLI · library/package · web service/API · desktop app · bot}}
 - **Hosting / distribution:** {{e.g., GitHub Pages (static, no backend) · npm/PyPI package · container/service · GitHub Release binaries}}
 - **Backend?** {{none (fully client-side / self-contained) · yes (describe) — if "none", say so explicitly; adding one later is a gated decision.}}
+- **Design direction:** {{for a user-facing product, the visual feel/style and design-system intent — e.g., "clean and minimal like Linear/Vercel" · reuse an existing design system / brand tokens · "no strong preference — propose one". Concrete reference *links* go in §6. "N/A" for a library / pure backend / non-visual tool.}}
 
 ## 3. Tech stack
 - **Language(s):** {{e.g., TypeScript}}
 - **Framework(s) / key libraries:** {{e.g., React, Vite, Tailwind, Zod}}
 - **Package manager:** {{npm · pnpm · uv · pip · go · cargo}}
 - **Test runner / e2e:** {{e.g., Vitest + Playwright · pytest · go test}}
+- **Visual verification:** {{the browser-automation tool used to render + screenshot the running UI for the design loop — e.g., Playwright (often shared with e2e) · Puppeteer · a headless-browser CLI; "n/a" for a non-visual product.}}
 
 ## 4. MVP scope (v1)
 List the must-have features for the first shippable version (milestone **M1**). Everything else is post-MVP backlog — it feeds the `ROADMAP.md` milestones the agent proposes after each release via the next-milestone gate.
@@ -42,7 +44,7 @@ List the must-have features for the first shippable version (milestone **M1**). 
 
 ## 6. Reuse & references
 - **Prior art / code to study or port:** {{repo links + what to take from them.}}
-- **Design/UX references:** {{links, or "N/A".}}
+- **Design/UX references:** {{reference *links* — sites/products/screenshots to emulate, or "N/A". The qualitative direction goes in §2.}}
 
 ## 7. Harness pre-answers (so agents-template New-Project-Setup never stalls)
 - **Coverage threshold:** {{e.g., 80 — Sentinel ratchets up; never decreases.}}

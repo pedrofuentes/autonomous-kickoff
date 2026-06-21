@@ -36,7 +36,7 @@
 - **Authorization tiers** the prompts depend on (`MISSION.md` §9 vocabulary; reuse exactly, no synonyms): `auto` · `auto-with-audit` · `time-boxed` · `human-required` · `never`.
 - **Decision directives** the prompts parse: a comment whose first line is `Decision: approved` | `Decision: option <X>` | `Decision: changes — <…>` | `Decision: hold`.
 - **Agent comment marker:** the agent self-signs every issue/PR comment it posts with `<!-- agent:autonomous-kickoff -->`, and **never** applies `decision:*` labels — so a self-signed comment is the agent's own (not a directive), and consumers verify a `decision:*` label's `labeled`-event actor is the cofounder.
-- **Versioning.** When you change any `template/docs/*` or `template/MISSION.md`, bump `template/docs/VERSION` (SemVer per the prompt contract: MAJOR breaking / MINOR additive / PATCH wording), add a `CHANGELOG.md` entry (with a **Migration** block for breaking changes), and tag the release `vX.Y.Z`. Keep `template/docs/VERSION` == the `CHANGELOG.md` latest entry == the git tag.
+- **Versioning.** When you change any `template/docs/*` or `template/MISSION.md`, bump `template/docs/VERSION` (SemVer per the prompt contract: MAJOR breaking / MINOR additive / PATCH wording), add a `CHANGELOG.md` entry (with a **Migration** block for breaking changes), and tag the release `vX.Y.Z`. Keep `template/docs/VERSION` == the `CHANGELOG.md` latest entry == the git tag == the `site/` footer badges (`site/index.html` + `site/reference.html`).
 - Keep pasteable prompts copy-safe: straight quotes (no smart quotes) inside any block a user copies.
 
 ## Validation (no build/test — these are the checks)

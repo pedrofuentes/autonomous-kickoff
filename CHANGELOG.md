@@ -10,6 +10,30 @@ All notable changes to the **autonomous-kickoff** template are recorded here. Ve
 The current version lives in [`template/docs/VERSION`](template/docs/VERSION) and travels into each
 consumer's `docs/VERSION`. Releases are git-tagged `vX.Y.Z`.
 
+## [2.3.0] — 2026-06-21
+
+Make the **GitHub Project board the enforced operational + review hub** so a solo attended operator isn't chained to the CLI, and close the **visual design-quality loop**. Additive; no change to the label/Status vocabulary, the phase structure, or the merge config.
+
+### Added
+- **Board as an enforced precondition** (`KICKOFF.md` Operating-contract rule #9 + Phase 1 **Board gate**; `CONTINUOUS-OPERATION.md` §Principle + watchdog step 1). A GitHub Project board exists before any build work — every task is a card and every decision a board issue; the agent never operates purely conversationally, even attended single-operator. "No board at all" is a watchdog-repaired drift condition.
+- **Decisions are always recorded on the board, and async-answerable in attended mode** (`CONTINUOUS-OPERATION.md` §Decision protocol + §Attended single-operator mode; mirrored in `KICKOFF.md` rule #4 / Phase 0 / §Working with the cofounder). Recording is decoupled from answering: gates are always raised + recorded on the board; in **attended single-operator mode** the agent now accepts an **async board answer** under a bounded attribution — the self-signature marker + cofounder-login + no-other-write-collaborators (else the verified `labeled` actor) — so you can clear a gate from anywhere instead of staying in the CLI. The non-attended path stays **fail-closed**; provisioning a distinct identity removes the bound and unlocks unattended Tier-2.
+- **Design-quality upgrade** — three parts as one loop:
+  - **Discipline up front** (`KICKOFF.md` Phase 2; `ORCHESTRATION.md` UX/UI role): design tokens, concrete **design references**, and a named **design rubric** (hierarchy, spacing, contrast, alignment, type scale, token usage, component consistency, empty/loading/error states, responsive, a11y) owned by the UX specialist.
+  - **A build-time visual loop** (`KICKOFF.md` Phases 4…N): render the running app with the project's **visual-verification tool**, screenshot each touched view + state, self-critique against the rubric, and iterate to the bar.
+  - **Screenshots posted to the board** as design evidence (committed path and/or PR CI artifact, referenced by URL), plus a **`time-boxed` design-review gate** (reuses `needs:decision`) so you can approve design async — it never stalls the build.
+- **New `MISSION.md` fields:** §2 **Design direction** and §3 **Visual verification** (both with a sensible "n/a" for non-visual products); §6 **Design/UX references** clarified as reference *links*.
+
+### Changed
+- **Definition of Done** (`KICKOFF.md` + `CONTINUOUS-OPERATION.md`): a **user-facing** milestone also requires the built UI to meet the design rubric with its design-review gate resolved.
+- **README / site**: narrative reflects board-from-the-start, async attended board decisions, and the visual loop; the prompt-library names, the `#the-prompt-library` anchor, and the prompt blocks are unchanged. `site/` version badges bumped.
+
+### MIGRATIONS (from 2.2.0)
+Additive — safe to adopt mid-run via the **Migrate** prompt.
+1. **Add the two new `MISSION.md` fields** to your brief: §2 **Design direction** and §3 **Visual verification** (use "n/a" for a non-visual product). The agent asks if they're absent.
+2. **Expect a board from the start** — if a run was operating purely in the CLI without a board, the agent creates and seeds one before continuing.
+3. **Attended single-operator runs:** the board decision channel is now **bounded-trusted** — you may answer a `Decision:` on the board, not only in the CLI. No action required; provision a distinct identity any time to go fully unattended.
+4. **No label/Status/tier changes** — the design-review gate reuses `needs:decision`.
+
 ## [2.2.0] — 2026-06-20
 
 Two behavior fixes for true co-founder-mode autonomy: make **non-implementation work actually

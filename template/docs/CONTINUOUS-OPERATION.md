@@ -200,7 +200,7 @@ A solo cofounder who is **present at the keyboard** can opt to run under their *
 
 ## Definition of Done (the stop target)
 
-**Per milestone:** product builds/runs and is deployed/distributed · the milestone's features work on real inputs · security/privacy constraints verified, **no open high/critical Dependabot/code-scanning alert and no open secret-scanning alert** · suite green + coverage ≥ threshold + lint/typecheck clean · every merge carried a Sentinel APPROVED/CONDITIONAL verdict with all conditions resolved · README/LICENSE/CONTRIBUTING shipped · `MISSION.md` §8 acceptance met · board empty. **Project:** the above for every shipped milestone **and** no further `ROADMAP.md` milestone remains (cofounder sign-off).
+**Per milestone:** product builds/runs and is deployed/distributed · the milestone's features work on real inputs · security/privacy constraints verified, **no open high/critical Dependabot/code-scanning alert and no open secret-scanning alert** · suite green + coverage ≥ threshold + lint/typecheck clean · every merge carried a Sentinel APPROVED/CONDITIONAL verdict with all conditions resolved · README/LICENSE/CONTRIBUTING shipped · `MISSION.md` §8 acceptance met · **for a user-facing milestone, the built UI meets the Phase-2 design rubric and its design-review gate is resolved** · board empty. **Project:** the above for every shipped milestone **and** no further `ROADMAP.md` milestone remains (cofounder sign-off).
 
 ## Stop conditions
 

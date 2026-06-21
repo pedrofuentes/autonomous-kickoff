@@ -70,7 +70,7 @@ Use this when an agent is **already building** and you want it to adopt a newer 
 
 ### Continue — resume or start the next round
 
-In v2 the agent doesn't idle at a milestone — it proposes the next one and continues on your approval or the §9 time-box. Paste this to **kick a new round by hand**: after the project fully stopped, after you closed the CLI, or to inject a new direction.
+In v2 the agent doesn't idle at a milestone — it proposes the next one and continues on your approval or the §9 time-box, and **within a live session it auto-captures an idea you float as the next goal** (it shapes the idea, confirms with you, records it to `ROADMAP.md`/`MISSION.md`, and continues — no prompt needed). Paste this **fallback** only when there's no live session to catch the idea: after the project fully stopped, or after you closed the CLI.
 
 > **Continue the autonomous build. Re-read `docs/KICKOFF.md` and `MISSION.md`, check the GitHub Project board, and if the watchdog isn't armed, re-arm it (see *Starting & restarting the heartbeat* in `CONTINUOUS-OPERATION.md`). If the current milestone still has `ready` or in-progress work, resume it. If a milestone just shipped (board empty, Definition of Done met), propose the next `ROADMAP.md` milestone as a `DECISION:` issue, @-mention me, and continue on my approval or the §9 time-box. If I've added a new direction in `ROADMAP.md`/`MISSION.md`, use that. Don't stop while ready work remains.**
 
@@ -151,9 +151,9 @@ From there the agent: bootstraps `agents-template` → researches CLI ergonomics
 
 **Agent identity (one-time, so decisions can't be forged and the agent can merge).** For unattended runs the agent must act under its **own** GitHub identity, not yours — and at launch **it walks you through provisioning one** (a GitHub App, a machine-user + fine-grained token, the Copilot coding agent, or `github-actions[bot]`) and verifies it. Want to start immediately? Set `attended-single-operator: yes` in `MISSION.md` §7 to run under your own account **while you're present** (gate answers via the live CLI, Tier-1 only); provision a distinct identity later to go fully unattended. Details in `CONTINUOUS-OPERATION.md` §Agent identity.
 
-Builds run **milestone by milestone**: at each milestone's Definition of Done the agent proposes the next `ROADMAP.md` milestone via a Decision gate and resumes on your approval — so "the next round" is just you answering that gate (from anywhere). It also **continuously watches security** (Dependabot / code scanning / secret scanning), filing alerts as board issues and gating releases on high/critical vulnerabilities and any detected secret. It stops for good only when you declare the project complete or the roadmap is empty.
+Builds run **milestone by milestone**: at each milestone's Definition of Done the agent proposes the next `ROADMAP.md` milestone via a Decision gate and resumes on your approval — so "the next round" is just you answering that gate (from anywhere) — and if you **float a new idea in a live session**, the agent shapes it with you and adopts it as the next goal automatically, no prompt required. It also **continuously watches security** (Dependabot / code scanning / secret scanning), filing alerts as board issues and gating releases on high/critical vulnerabilities and any detected secret. It stops for good only when you declare the project complete or the roadmap is empty.
 
-**Need to nudge it by hand** — resume a stopped run or inject a new direction? Paste the **Continue** prompt from [the prompt library](#the-prompt-library) above. To stop or re-arm on demand, use **Pause / Resume**; for a quick read-only check-in, use **Status**.
+**Need to nudge it by hand** — resume a stopped run, or inject a direction when **no live session is open** to catch it? Paste the **Continue** prompt from [the prompt library](#the-prompt-library) above. To stop or re-arm on demand, use **Pause / Resume**; for a quick read-only check-in, use **Status**.
 
 ## Relationship to agents-template
 

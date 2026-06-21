@@ -10,6 +10,45 @@ All notable changes to the **autonomous-kickoff** template are recorded here. Ve
 The current version lives in [`template/docs/VERSION`](template/docs/VERSION) and travels into each
 consumer's `docs/VERSION`. Releases are git-tagged `vX.Y.Z`.
 
+## [2.2.0] — 2026-06-20
+
+Two behavior fixes for true co-founder-mode autonomy: make **non-implementation work actually
+delegate** (close the gate-artifact authorship loophole), and let the agent **auto-capture a live
+cofounder idea** as the next goal without a hand-pasted prompt. Additive; no change to the merge
+config, authorization tiers, untrusted-input rules, label/Status vocabulary, or phase structure.
+
+### Added
+- **Hard per-gate delegation enforcement** (`KICKOFF.md` §How the phases run + Operating-contract
+  rule #2). Each gate artifact (`PRD.md`, `USER_FLOWS.md`, `DECISIONS.md`/`ARCHITECTURE.md`) must be
+  **authored by a specialist sub-agent (≠ Lead)** and red-teamed by a *different* sub-agent; a
+  **per-gate self-check** records both ids before the gate passes. Closes the loophole where the Lead
+  could solo-author the PRD/plan/tests as long as *some* sub-agent red-teamed it — implementation was
+  the only phase where "stop & report → Sentinel" made solo work structurally impossible.
+- **`producer ≠ Lead` ledger invariant for gate artifacts** (`ORCHESTRATION.md` §Delegation ledger),
+  alongside the existing `producer ≠ reviewer`. The watchdog's delegation audit
+  (`CONTINUOUS-OPERATION.md` step 4) now also flags a **Lead-authored gate artifact** as a Lead-solo
+  collapse, not just "authored *and* reviewed solo." (The Phase-0 `none` tier waives it when recorded.)
+- **Live-session idea auto-capture** (`KICKOFF.md` §Working with the cofounder + §After a milestone;
+  `CONTINUOUS-OPERATION.md` §Decision protocol + watchdog step 8). When the cofounder floats an idea
+  in the live session — at a milestone boundary *or* mid-build — the agent shapes it
+  (draft → ask → refine), confirms in-session, records it to `ROADMAP.md`/`MISSION.md`, and continues
+  — **no "Continue" prompt required**. Casual musing is shaped + confirmed before becoming committed
+  scope; mid-build a confirmed idea is *queued* (it doesn't derail the active milestone). A live,
+  present cofounder is the identity-verified cofounder; async/board text under a shared identity stays
+  untrusted.
+
+### Changed
+- **Test/QA delegation reinforced** (`KICKOFF.md` Phases 4…N): the cumulative `AC-n` acceptance suite,
+  e2e, and a11y/perf/security audits are owned by a Test/QA sub-agent — the Lead never authors the
+  suites.
+- **README**: the **Continue** prompt is reframed as a **fallback** for when no live session is open
+  to catch a floated idea (closed / fully-stopped runs); the prompt-library names and the prompt block
+  itself are unchanged.
+
+### MIGRATIONS (from 2.1.0)
+- None required. Adopt via the README **Update** prompt (re-copies the three `docs/*` + `docs/VERSION`);
+  no `MISSION.md` change.
+
 ## [2.1.0] — 2026-06-19
 
 Identity onboarding — make v2.0.0's required agent identity *easy to adopt* (guided provisioning) and give

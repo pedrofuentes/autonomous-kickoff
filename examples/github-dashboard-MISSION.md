@@ -51,8 +51,8 @@
 - **Git author identity (commits):** pedrofuentes <git@pedrofuent.es>
 - **AI attribution (commit `Co-authored-by` trailer):** Copilot <223556219+Copilot@users.noreply.github.com>
 - **Sentinel method:** B (CI, enforced by branch protection) for production + A (sub-agent) in dev.
-- **Agent identity (for unattended runs):** a private **GitHub App** `github-dashboard-bot` (`github-dashboard-bot[bot]`) — a distinct identity, NOT @pedrofuentes — installed on the repo with Contents/Issues/Pull requests/Projects (+ Actions) read-write; the agent authenticates via its installation token. (Required so decisions can't be forged and the agent can merge — author ≠ approver.)
-- **Attended single-operator mode** — `attended-single-operator: no` (this brief runs unattended under the App identity above).
+- **Agent identity (for unattended runs):** a dedicated **machine-user** account (e.g. `@github-dashboard-bot`) — a **distinct** GitHub identity, NOT @pedrofuentes — that the agent authenticates as via a **fine-grained, single-repo** token (read/write: Contents, Issues, Pull requests, Projects, Actions). Required so decisions can't be forged and the agent can merge (author ≠ approver). This is the **upgrade path to fully-unattended (Tier-2)** operation; provision it when ready (the agent walks you through it). See `CONTINUOUS-OPERATION.md` §Agent identity.
+- **Attended single-operator mode (opt-in)** — `attended-single-operator: yes — I accept running under my own identity while present`. Lets the build **start now** under @pedrofuentes while present: gate answers come through the **live CLI or a bounded-trusted async board channel** (self-signature + cofounder-login + solo-repo), it runs **Tier-1 only (no unattended Tier-2)**, and all other v2 protections stay on. Switch to the machine-user identity above to go fully unattended.
 - **Enforced coding patterns:** client-only (no backend); validate every GitHub API response with Zod; conditional requests (ETag/`If-None-Match`) + batched GraphQL to respect the 5,000 req/hr limit; functional React components + hooks; named exports; accessible (WCAG 2.1 AA) components; secrets never touch the bundle.
 - **Forbidden actions (NEVER):** commit a PAT or any secret; send user code/data to any non-GitHub origin (only `api.github.com`, `github.com/login/*`, `*.githubusercontent.com`); introduce a backend/server/proxy without explicit cofounder approval; bypass Sentinel.
 - **Enable branch protection on `main`?** Yes.
@@ -63,17 +63,17 @@
 - **Privacy invariant** verified by the automated network test (GitHub-owned origins only).
 - **Rate-limit safe:** conditional requests + batched GraphQL; degrades gracefully near 5,000 req/hr.
 - README with screenshots/GIF + a one-click "use it now" link.
-- Each item above is bound to an executable test id (`AC-1`…`AC-n`) checked on every PR + milestone (cumulative acceptance regression).
+- Each acceptance item above is bound to an executable test id (`AC-1`…`AC-n`) checked on every PR + milestone (cumulative acceptance regression).
 
-## 9. Authorization — tiers (defaults from the template `MISSION.md` §9; project specifics below)
+## 9. Authorization — tiers (defaults from the template `docs/KICKOFF.md` + `MISSION.md` §9; project specifics below)
 The agent sorts every gated action into `auto` · `auto-with-audit` · `time-boxed` · `human-required` · `never` and acts per tier. For this project:
 - **Default time-box (auto-proceed window):** 24h.
 - **Risk tolerance:** conservative — the app holds a user's GitHub token, so borderline actions sit at `human-required`.
 - **Production release gate:** human-required — *you* flip on GitHub Pages / activate the production deploy for each release; staging/preview is `auto`.
 - **`time-boxed` (auto-proceed after 24h):** the next milestone *within `ROADMAP.md`*; a **built-UI design review** — the agent posts screenshots to a `DECISION:` issue and proceeds if you don't object.
 - **`auto` (pre-authorized, no asking):** add the §3 stack deps (React, Vite, TypeScript, Tailwind, Vitest, Playwright, Zod, ESLint/Prettier, React Testing Library) + reasonable transitive tooling; **author** CI/CD workflow files (tests, lint/typecheck, Sentinel Method B, the Pages deploy pipeline) + the Vite base-path/SPA-fallback config; configure branch protection; routine **reversible** architecture consistent with this brief.
-- **`human-required` (sign-off first):** auth / token-storage / privacy design (no auth/token-persistence code before sign-off); adding any backend / server / proxy or non-GitHub runtime origin (incl. for device-flow); heavy/unusual deps beyond §3; any `.github/workflows/**` edit; a first-time-contributor PR.
-- **`never`:** commit a PAT or any secret; send user code/data to a non-GitHub origin; weaken/bypass Sentinel, tests, branch protection, or the scanners; force-push / rewrite `main`; delete branches/releases/data.
+- **`human-required` (sign-off first):** auth / token-storage / privacy design (no auth/token-persistence code before sign-off); adding any backend / server / proxy or non-GitHub runtime origin (incl. for device-flow); heavy/unusual deps beyond §3; any `.github/workflows/**` edit or a harness-integrity PR (Sentinel config/prompt, `AGENTS.md`, branch protection, scanner config); a first-time-contributor PR.
+- **`never`:** commit a PAT or any secret; send user code/data to a non-GitHub origin; weaken/bypass Sentinel, tests, branch protection, or the scanners (branch protection is tighten-only); force-push / rewrite `main`; delete branches/releases/tags/data.
 
 ## 10. Resource governance (concurrency & cost)
 - **Max concurrent workers / worktrees:** 4 · **per-watchdog-tick spawn cap:** 3 · **per-milestone cost budget:** no hard cap (small project) — queue at the caps, finish in-flight work first.

@@ -10,6 +10,13 @@ All notable changes to the **autonomous-kickoff** template are recorded here. Ve
 The current version lives in [`template/docs/VERSION`](template/docs/VERSION) and travels into each
 consumer's `docs/VERSION`. Releases are git-tagged `vX.Y.Z`.
 
+## [2.5.0] — 2026-06-23
+
+Link the Project board to the repository at creation. Earlier versions created the board, its Status options, and the issues but never **linked** the Projects v2 board to the repo, so the board never surfaced under the repo's **Projects** tab. Additive guidance; no change to the label/Status/tier vocabulary, the phase structure, the public prompts, or the merge config.
+
+### Fixed
+- **Board not linked to the repo** (`KICKOFF.md` Phase 1 + Operating-contract rule #9 + Board gate; `CONTINUOUS-OPERATION.md` §Principle + watchdog reconcile; `ORCHESTRATION.md`). A Projects v2 board is owned by a user/org and is **not** attached to a repo until you link it. Phase 1 now runs `gh project link <number> --owner <owner> --repo <owner>/<repo>` (same `project` scope as Status; folded into the same `blocked`-task fallback) so the board surfaces under the repo's **Projects** tab — the cofounder's window into progress — and repo issues/PRs can be added to it. The board-as-hub precondition, the Board gate, and the watchdog drift-repair now all require the board to exist **and be linked**.
+
 ## [2.4.0] — 2026-06-22
 
 Correct the **identity/token model** for driving the board, reframe identity provisioning around the **individual developer**, and tighten the **trust + supply-chain** posture. Additive; no change to the label/Status/tier vocabulary, the phase structure, the public prompts, or the merge config.

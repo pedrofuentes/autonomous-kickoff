@@ -70,7 +70,7 @@ A delegated worker can stall or fail **without** ever producing a Sentinel verdi
 
 ## Coordination & memory
 
-- **GitHub Project board + issues = the source of truth and the work queue.** Keep it current; it's how the cofounder watches progress.
+- **GitHub Project board + issues = the source of truth and the work queue.** Keep it current and **linked to the repo** (so it surfaces in the repo's Projects tab); it's how the cofounder watches progress.
 - **Delegation ledger (`PLAN.md`).** Per increment and per gate artifact, record the **producer** sub-agent id and the **reviewer/red-teamer** sub-agent id (+ PR/artifact ref). Two invariants must hold at every entry: **producer ≠ reviewer**, and — **for gate artifacts** (`PRD.md`, `USER_FLOWS.md`, `DECISIONS.md`/`ARCHITECTURE.md`) — **producer ≠ Lead** (the Lead coordinates + reviews, never authors). The watchdog audits this and flags a **Lead-solo collapse** — the Lead **authored a gate artifact**, or authored *and* reviewed, or no sub-agent was used — as a WARNING, and re-delegates. *(Only the Phase-0 `none` tier — no sub-agents at all — waives `producer ≠ Lead`; record that limitation here and lean on Sentinel-in-CI as the independent reviewer.)* Also externalize the orchestrator's **in-flight state** here (open increments, claims, pending rebases) so a fresh session or watchdog tick resumes idempotently.
 - `LEARNINGS.md` — log every Sentinel rejection pattern + correction; re-read before each PR to self-check.
 - `DECISIONS.md` — ADRs. `CHANGELOG.md` — user-facing changes.

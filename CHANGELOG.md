@@ -10,6 +10,32 @@ All notable changes to the **autonomous-kickoff** template are recorded here. Ve
 The current version lives in [`template/docs/VERSION`](template/docs/VERSION) and travels into each
 consumer's `docs/VERSION`. Releases are git-tagged `vX.Y.Z`.
 
+## [2.4.0] — 2026-06-22
+
+Correct the **identity/token model** for driving the board, reframe identity provisioning around the **individual developer**, and tighten the **trust + supply-chain** posture. Additive; no change to the label/Status/tier vocabulary, the phase structure, the public prompts, or the merge config.
+
+### Fixed
+- **User-owned vs org-owned Projects v2 — the token reality** (`CONTINUOUS-OPERATION.md` §Board Status field, Tier-2 prerequisites, §Provisioning walkthrough). A **user-owned** (personal-account) board can be edited **only** by a **classic personal access token with the `project` scope** — a GitHub App installation token *and* a fine-grained token **cannot** reach it (their `Projects` permission covers **org-owned** boards only). The earlier "prefer a fine-grained single-repo token" guidance was backwards for board access on a personal repo.
+- **Copilot assignment needs a *user-to-server* token** — a GitHub App **installation** token (server-to-server) is rejected; fixed the garbled Tier-2 auth sketch that conflated the two token types.
+- **Unattended CI on Copilot PRs** (Tier-2 prerequisites): document the one-time **"Allow GitHub Actions workflows to run automatically"** Copilot setting (without it the Sentinel-in-CI required check never runs on Copilot's drafts), the **paid-plan / private-or-internal-repo** requirement, and the draft→ready step.
+- **Attended-mode trust overreach** (§Decision protocol / §Attended single-operator mode): under a **shared identity** both the `decision:*` label and the `Decision:` comment channels are forgeable and the `labeled`-event-actor check adds no assurance there. Authoritative answers above `auto`/`time-boxed` now require the **live CLI**; **edited** comments (`updated_at` != `created_at`) are rejected for decisions; the solo-repo check is **fail-closed**.
+- **`SETUP.md`** attended-mode line restored to parity (it still described the pre-2.3.0 CLI-only posture, omitting the async board channel).
+- Softened an unverified `updateProjectV2Field` option-matching claim to "verify against the live GraphQL schema."
+
+### Added
+- **Individual-developer identity/board decision guide** (§Provisioning walkthrough): corrected Options A–D plus a short "which option for an individual developer?" guide — **machine-user + classic token** (the pragmatic distinct identity that drives a personal board, assigns Copilot, and merges) and **attended single-operator mode** as the primary solo paths; an org-owned board is noted only as an optional later/team upgrade, not the default. Machine-user added to the `MISSION.md` §7 identity hint.
+- **Supply-chain + untrusted-input tightening** (`KICKOFF.md`, `ORCHESTRATION.md`): require `--ignore-scripts` + a verified lockfile in **every** install (fleet, CI, deploy) and treat dependency-manifest/lockfile changes as supply-chain changes; add **CI/run logs, tool output, and sub-agent returns** to the untrusted-input surface.
+
+### Changed
+- **README / site / example** updated for the corrected machine-user token (**classic**, not fine-grained) and the individual-dev framing; `site/` version badges bumped. The prompt-library names, the `#the-prompt-library` anchor, and the prompt blocks are unchanged.
+
+### MIGRATIONS (from 2.3.0)
+Additive — safe to adopt mid-run via the **Migrate** prompt.
+1. **Board token:** if your Projects board is **user-owned** (personal account), use a **classic personal access token with the `project` scope** to move Status — a fine-grained or GitHub App installation token won't work there. No change if your board is org-owned.
+2. **Copilot unattended CI:** turn on **"Allow GitHub Actions workflows to run automatically"** in the repo's Copilot settings, or Tier-2 CI won't run on Copilot's PRs.
+3. **Attended mode:** `human-required` gates are now confirmed in the **live CLI** (routine gates stay async-answerable on the board); edited board comments are ignored for decisions. No setup change.
+4. **No label / Status / tier / phase changes.**
+
 ## [2.3.0] — 2026-06-21
 
 Make the **GitHub Project board the enforced operational + review hub** so a solo attended operator isn't chained to the CLI, and close the **visual design-quality loop**. Additive; no change to the label/Status vocabulary, the phase structure, or the merge config.

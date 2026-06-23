@@ -369,7 +369,7 @@ cp /tmp/ak/template/MISSION.md ./MISSION.md &amp;&amp; cp -r /tmp/ak/template/do
 
           <div class="panel" style="margin-top: var(--sp-6);">
             <h3>Agent comment marker</h3>
-            <p>The agent self-signs every issue/PR comment it posts with <code>&lt;!-- agent:autonomous-kickoff --&gt;</code>, and <strong>never</strong> applies <code>decision:*</code> labels. So a self-signed comment is the agent's own (not a directive), and a <code>decision:*</code> label is trusted only when its <code>labeled</code>-event actor is the cofounder.</p>
+            <p>The agent self-signs every issue/PR comment it posts with <code>&lt;!-- agent:autonomous-kickoff --&gt;</code>, and <strong>never</strong> applies <code>decision:*</code> labels. So a self-signed comment is the agent's own (not a directive), and a <code>decision:*</code> label is trusted via its <code>labeled</code>-event actor &mdash; fully under a distinct agent identity, and bounded-trusted in attended single-operator mode.</p>
           </div>
         </section>
 

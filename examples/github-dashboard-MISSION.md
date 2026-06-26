@@ -48,6 +48,7 @@
 
 ## 7. Harness pre-answers
 - **Coverage threshold:** 80 (Sentinel ratchets up; never decreases).
+- **Weak-test gate:** coverage-diff (fail a PR that lowers per-diff coverage — catches non-discriminating tests at PR time).
 - **Git author identity (commits):** pedrofuentes <git@pedrofuent.es>
 - **AI attribution (commit `Co-authored-by` trailer):** Copilot <223556219+Copilot@users.noreply.github.com>
 - **Sentinel method:** B (CI, enforced by branch protection) for production + A (sub-agent) in dev.

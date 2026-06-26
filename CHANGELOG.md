@@ -10,6 +10,36 @@ All notable changes to the **autonomous-kickoff** template are recorded here. Ve
 The current version lives in [`template/docs/VERSION`](template/docs/VERSION) and travels into each
 consumer's `docs/VERSION`. Releases are git-tagged `vX.Y.Z`.
 
+## [2.6.0] — 2026-06-26
+
+Fold the **github-dashboard autonomous-run feedback** into the template: kill the **merge-pipeline bottleneck**, ship **canonical sub-agent briefs**, and harden **backlog hygiene + the watchdog**. Additive and back-compatible; the phase structure, authorization tiers, public prompts, and the load-bearing merge config (Sentinel-in-CI required + `required_approving_review_count: 0`) are unchanged. **One additive vocabulary change:** three new intake-triage labels (`bug:confirmed`, `polish`, `stale`).
+
+### Added
+- **`template/docs/BRIEFS.md`** — canonical, paste-ready sub-agent briefs (implementer / Sentinel-invocation / triage). Sub-agents don't inherit `AGENTS.md`, so fill only the `<...>` delta instead of hand-rolling a ~60-line contract per spawn (drift, token cost, prompt bugs). Cross-referenced from `KICKOFF.md` (companion docs) and `ORCHESTRATION.md` (§Non-negotiable rules); registered in `AGENTS.md` (Repo map + invariant #4).
+- **Merge-throughput guidance** (`ORCHESTRATION.md` §Parallelization model; mirrored in `CONTINUOUS-OPERATION.md` Tier 2 + `KICKOFF.md` Phase 0 preflight): prefer a **GitHub merge queue** *or* drop strict "require up-to-date" and rely on a **post-merge `main`-green verify** (`git patch-id` for equivalence) so PRs don't serialize behind *rebase → CI → merge*; keep the gate fast. Plus **disjoint-file (file-scope) scheduling** and **p0-first** ready-queue ordering.
+- **Intake-triage labels** `bug:confirmed` · `polish` · `stale` (the Test/QA sub-agent labels every filed issue at creation) and a watchdog **close-sweep** (a single `Fixes #A, #B` closes only `#A` — repeat the keyword), plus the in-PR **CHANGELOG** convention (TDD-exempt). (`KICKOFF.md`, `ORCHESTRATION.md`, `CONTINUOUS-OPERATION.md`.)
+- **Status digest** rollup in the watchdog (counts: merged / in-review / in-progress / blocked / needs-decision / done) so the cofounder can intervene without the firehose.
+- **Machine-checkable DoD**: the watchdog evaluates the milestone Definition of Done as an explicit boolean each tick (`board-empty ∧ AC-n green ∧ no high/critical-or-secret alert ∧ artifact verified ∧ every-merge-Sentinel-passed`).
+- **Optional weak-test gate** (`MISSION.md` §7: `off` | `coverage-diff` | `mutation`) — flag non-discriminating tests / untested branches at PR time instead of filing follow-ups forever. Default `off`.
+
+### Changed
+- **Worktrees branch from `origin/main` after `git fetch`** (`ORCHESTRATION.md`), never the possibly-stale local checkout.
+- **Durable orchestrator state** (`ORCHESTRATION.md` §Coordination & memory): keep authoritative state in `PLAN.md` + the board, never in a fleet-shared scratch store sub-agents can overwrite.
+- **Transient-tooling retry/backoff** (`KICKOFF.md` Tool mandate): retry a transient `gh`/network/rate-limit failure with backoff before the record-limitation → fall-back → escalate path.
+- **README / site / example** synced (incl. the **Migrate**/**Set-up** prompts now copying `docs/BRIEFS.md`); `site/` version badges bumped to `2.6.0`. The prompt-library names, the `#the-prompt-library` anchor, and the prompt blocks' meaning are unchanged.
+
+### Recommended upstream (`agents-template` — out of scope for this repo)
+- **Risk-routed Sentinel review depth** — a calibrated fast-path for trivial / no-logic diffs, full depth for data-layer / concurrency / security / harness-integrity — and the **"revert-impl-and-run-the-new-test" RED proof**. These live in `docs/SENTINEL.md`, owned by `agents-template`.
+- **Stop treating a missing CHANGELOG entry as a Sentinel 🟡 trigger**, paired with the in-PR CHANGELOG convention added here.
+
+### MIGRATIONS (from 2.5.0)
+Additive — safe to adopt mid-run via the **Migrate** prompt.
+1. **Add the three intake-triage labels** to your repo: `bug:confirmed`, `polish`, `stale` (labels-only; no Status / tier / phase change).
+2. **Copy the new `docs/BRIEFS.md`** alongside your other `docs/*` files (the updated Migrate prompt fetches it).
+3. **Branch protection:** if you required a strict "branches up to date" rule, **drop it** (or switch to a **merge queue**) so merges don't serialize — the load-bearing config (Sentinel-in-CI required + `required_approving_review_count: 0`) is unchanged.
+4. **Optional:** set the new `MISSION.md` §7 **weak-test gate** knob (default `off`).
+5. **No phase, tier, Status, or public-prompt-meaning changes.**
+
 ## [2.5.0] — 2026-06-23
 
 Link the Project board to the repository at creation. Earlier versions created the board, its Status options, and the issues but never **linked** the Projects v2 board to the repo, so the board never surfaced under the repo's **Projects** tab. Additive guidance; no change to the label/Status/tier vocabulary, the phase structure, the public prompts, or the merge config.

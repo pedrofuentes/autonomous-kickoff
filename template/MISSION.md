@@ -48,6 +48,7 @@ List the must-have features for the first shippable version (milestone **M1**). 
 
 ## 7. Harness pre-answers (so agents-template New-Project-Setup never stalls)
 - **Coverage threshold:** {{e.g., 80 — Sentinel ratchets up; never decreases.}}
+- **Weak-test gate (optional):** {{`off` (default) · `coverage-diff` (fail a PR that lowers per-diff coverage) · `mutation` (heavier — flag a PR whose changed lines survive mutation testing). Catches non-discriminating tests / untested branches at PR time instead of filing endless follow-ups; `coverage-diff` is the lighter default if you enable it.}}
 - **Git author identity (commits):** {{Name <email>}}
 - **AI attribution (commit `Co-authored-by` trailer):** {{Name <email>}}
 - **Sentinel method:** {{B (CI, enforced by branch protection) for production + A (sub-agent) in dev — recommended.}}

@@ -111,7 +111,7 @@
                 <span class="copy-label">Copy</span>
               </button>
             </div>
-            <div class="prompt-body"><pre><code id="p-setup">Fetch the autonomous-kickoff template from https://github.com/pedrofuentes/autonomous-kickoff &mdash; download all files from the template/ directory into this project's root (you'll get MISSION.md plus docs/KICKOFF.md, docs/ORCHESTRATION.md, docs/CONTINUOUS-OPERATION.md, and docs/VERSION). Then read docs/KICKOFF.md. Scan my project and auto-fill everything you can in MISSION.md (name, repo, stack, package manager, test runner from manifests/config); then ask me &mdash; in one batch &mdash; for the concrete facts you can't infer (MVP, security/auth, harness pre-answers, what's pre-authorized vs. gated); and for the vision-level fields (mission, target users, success vision), be a thought partner &mdash; propose a concrete draft from what you found + light research, ask me a few focused questions, and refine to my approval (help me sharpen it, don't just collect; don't invent product scope). Show me the filled MISSION.md for confirmation. Do NOT start building yet.</code></pre></div>
+            <div class="prompt-body"><pre><code id="p-setup">Fetch the autonomous-kickoff template from https://github.com/pedrofuentes/autonomous-kickoff &mdash; download all files from the template/ directory into this project's root (you'll get MISSION.md plus docs/KICKOFF.md, docs/ORCHESTRATION.md, docs/CONTINUOUS-OPERATION.md, docs/BRIEFS.md, and docs/VERSION). Then read docs/KICKOFF.md. Scan my project and auto-fill everything you can in MISSION.md (name, repo, stack, package manager, test runner from manifests/config); then ask me &mdash; in one batch &mdash; for the concrete facts you can't infer (MVP, security/auth, harness pre-answers, what's pre-authorized vs. gated); and for the vision-level fields (mission, target users, success vision), be a thought partner &mdash; propose a concrete draft from what you found + light research, ask me a few focused questions, and refine to my approval (help me sharpen it, don't just collect; don't invent product scope). Show me the filled MISSION.md for confirmation. Do NOT start building yet.</code></pre></div>
           </article>
 
           <!-- LAUNCH -->
@@ -144,7 +144,7 @@
                 <span class="copy-label">Copy</span>
               </button>
             </div>
-            <div class="prompt-body"><pre><code id="p-update">Fetch the latest autonomous-kickoff template from https://github.com/pedrofuentes/autonomous-kickoff &mdash; read its template/docs/VERSION and compare to my docs/VERSION. If I'm behind, show me the CHANGELOG.md entries between the two versions, then update docs/KICKOFF.md, docs/ORCHESTRATION.md, docs/CONTINUOUS-OPERATION.md and docs/VERSION from template/docs/* (they're generic &mdash; nothing project-specific to preserve) and run any Migration steps the changelog lists for those versions. Leave my MISSION.md untouched &mdash; but if a Migration step requires a MISSION.md change (a new section, or the &sect;9 schema change in a MAJOR bump), don't edit it; hand me a checklist of those manual follow-ups and flag that the updated docs may reference brief sections/knobs I haven't added yet. Show me a diff summary before applying, then re-arm the continuous-operation watchdog (see CONTINUOUS-OPERATION.md) so work resumes.</code></pre></div>
+            <div class="prompt-body"><pre><code id="p-update">Fetch the latest autonomous-kickoff template from https://github.com/pedrofuentes/autonomous-kickoff &mdash; read its template/docs/VERSION and compare to my docs/VERSION. If I'm behind, show me the CHANGELOG.md entries between the two versions, then update docs/KICKOFF.md, docs/ORCHESTRATION.md, docs/CONTINUOUS-OPERATION.md, docs/BRIEFS.md and docs/VERSION from template/docs/* (they're generic &mdash; nothing project-specific to preserve) and run any Migration steps the changelog lists for those versions. Leave my MISSION.md untouched &mdash; but if a Migration step requires a MISSION.md change (a new section, or the &sect;9 schema change in a MAJOR bump), don't edit it; hand me a checklist of those manual follow-ups and flag that the updated docs may reference brief sections/knobs I haven't added yet. Show me a diff summary before applying, then re-arm the continuous-operation watchdog (see CONTINUOUS-OPERATION.md) so work resumes.</code></pre></div>
           </article>
 
           <!-- MIGRATE -->
@@ -160,7 +160,7 @@
                 <span class="copy-label">Copy</span>
               </button>
             </div>
-            <div class="prompt-body"><pre><code id="p-migrate">Migrate this project to the latest autonomous-kickoff template, safely and mid-run. (1) First read and record my current docs/VERSION (if it's absent, treat my version as pre-1.0 / unversioned). (2) Fetch https://github.com/pedrofuentes/autonomous-kickoff and overwrite docs/KICKOFF.md, docs/ORCHESTRATION.md, docs/CONTINUOUS-OPERATION.md and docs/VERSION from its template/docs/*; leave MISSION.md untouched. (3) Read CHANGELOG.md and follow the Migration steps from my recorded old version up to the new one &mdash; apply them additively, without disrupting in-flight work: keep all current cards, worktrees, and the open increment as they are; create any missing board Status options and labels; adopt the new comment/identity and decision rules; and apply new phase gates only to work not yet started. Any Migration step that needs a MISSION.md edit (a new section, or the &sect;9 tier-matrix schema in a MAJOR bump) &mdash; don't touch MISSION.md; hand me a checklist of those manual follow-ups and flag that the new docs reference brief sections/knobs I must add for them to fully resolve. (4) Re-read the three docs, record the new docs/VERSION in PLAN.md, re-arm the watchdog, then continue the build from where you left off &mdash; do this at the next safe point (after the current PR is opened) and report a one-line summary of what changed.</code></pre></div>
+            <div class="prompt-body"><pre><code id="p-migrate">Migrate this project to the latest autonomous-kickoff template, safely and mid-run. (1) First read and record my current docs/VERSION (if it's absent, treat my version as pre-1.0 / unversioned). (2) Fetch https://github.com/pedrofuentes/autonomous-kickoff and overwrite docs/KICKOFF.md, docs/ORCHESTRATION.md, docs/CONTINUOUS-OPERATION.md, docs/BRIEFS.md and docs/VERSION from its template/docs/*; leave MISSION.md untouched. (3) Read CHANGELOG.md and follow the Migration steps from my recorded old version up to the new one &mdash; apply them additively, without disrupting in-flight work: keep all current cards, worktrees, and the open increment as they are; create any missing board Status options and labels; adopt the new comment/identity and decision rules; and apply new phase gates only to work not yet started. Any Migration step that needs a MISSION.md edit (a new section, or the &sect;9 tier-matrix schema in a MAJOR bump) &mdash; don't touch MISSION.md; hand me a checklist of those manual follow-ups and flag that the new docs reference brief sections/knobs I must add for them to fully resolve. (4) Re-read the docs, record the new docs/VERSION in PLAN.md, re-arm the watchdog, then continue the build from where you left off &mdash; do this at the next safe point (after the current PR is opened) and report a one-line summary of what changed.</code></pre></div>
           </article>
 
           <!-- CONTINUE -->
@@ -319,6 +319,9 @@ cp /tmp/ak/template/MISSION.md ./MISSION.md &amp;&amp; cp -r /tmp/ak/template/do
                 <tr><td><span class="chip">sentinel:important</span></td><td>A Sentinel 🟡 follow-up to resolve before the milestone signs off.</td></tr>
                 <tr><td><span class="chip">sentinel:minor</span></td><td>A Sentinel 🟢 nit.</td></tr>
                 <tr><td><span class="chip">flaky</span></td><td>A known-flaky test, tracked.</td></tr>
+                <tr><td><span class="chip chip--warn">bug:confirmed</span></td><td>Intake triage: a reproduced, real defect.</td></tr>
+                <tr><td><span class="chip chip--label">polish</span></td><td>Intake triage: a real but non-blocking improvement.</td></tr>
+                <tr><td><span class="chip">stale</span></td><td>Intake triage: not reproducible / already fixed / out of scope.</td></tr>
               </tbody>
             </table>
           </div>
@@ -478,7 +481,7 @@ cp /tmp/ak/template/MISSION.md ./MISSION.md &amp;&amp; cp -r /tmp/ak/template/do
       </div>
       <div class="footer-bottom">
         <span>&copy; <span id="year">2026</span> autonomous-kickoff &middot; MIT licensed</span>
-        <span class="version-badge"><span class="dot" aria-hidden="true"></span> template v2.5.0</span>
+        <span class="version-badge"><span class="dot" aria-hidden="true"></span> template v2.6.0</span>
       </div>
     </div>
   </footer>
